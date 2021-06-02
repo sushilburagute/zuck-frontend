@@ -5,6 +5,7 @@ import {
     LoginPage,
     OffersPage,
     RestaurantsPage,
+    SearchPage,
     WishlistPage,
 } from "../pages/index";
 
@@ -28,6 +29,10 @@ export const navLinks = [
     {
         pageComponent: <RestaurantsPage />,
         path: "/restaurants",
+    },
+    {
+        pageComponent: <SearchPage />,
+        path: "/search",
     },
     {
         pageComponent: <WishlistPage />,
