@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactComponent as ZuckLogo } from "../../assets/icons/zuck-logo.svg";
 import { SearchIcon, HeartIcon, ShoppingCartIcon, UserCircleIcon } from "@heroicons/react/outline";
-import { NavLink } from "react-router-dom";
+import { NavLink, Link } from "react-router-dom";
 
 const headerNavLinks = [
     {
@@ -25,19 +25,21 @@ function Header(props) {
     return (
         <header className="flex justify-between p-6 mx-auto max-w-7xl">
             <div>
-                <ZuckLogo className="w-24" />
+                <Link to="/">
+                    <ZuckLogo className="w-24" />
+                </Link>
             </div>
             <div className="flex">
                 {headerNavLinks.map(({ label, icon, path }) => {
                     return (
                         <NavLink
                             to={path}
-                            className="flex justify-center pt-1 ml-16 align-middle bg-white cursor-pointer text-secondary-600 hover:text-primary-700"
+                            className="flex justify-center pt-1 ml-16 align-middle bg-white cursor-pointer"
                         >
-                            <span className="w-5 text-lg align-baseline stroke-1 text-secondary-700 ">
+                            <span className="w-5 text-lg align-baseline stroke-1 text-secondary-800 ">
                                 {icon}
                             </span>
-                            <p className="ml-2 text-sm font-semibold align-baseline text-secondary-700 ">
+                            <p className="ml-2 text-sm font-semibold align-baseline text-secondary-800 ">
                                 {label}
                             </p>
                         </NavLink>
@@ -45,12 +47,12 @@ function Header(props) {
                 })}
                 <NavLink
                     to="/login"
-                    className="flex pt-1 ml-16 align-middle bg-white cursor-pointer justify-cente text-secondary-600 hover:text-secondary-500"
+                    className="flex justify-center pt-1 ml-16 align-middle bg-white cursor-pointer"
                 >
-                    <div className="w-5 text-lg align-baseline stroke-1 text-secondary-700">
+                    <div className="w-5 text-lg align-baseline stroke-1 text-secondary-800">
                         <UserCircleIcon />
                     </div>
-                    <p className="ml-2 text-sm font-semibold align-baseline text-secondary-700">
+                    <p className="ml-2 text-sm font-semibold align-baseline text-secondary-800">
                         Sign in
                     </p>
                 </NavLink>
