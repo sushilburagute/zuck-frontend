@@ -17,4 +17,13 @@ export const mockData = [
         veg: true,
         serves: 1,
     },
+    {
+        id: 3,
+        name: "Cake",
+        price: 165,
+        rating: 3,
+        deliveryTime: 50,
+        veg: false,
+        serves: 2,
+    },
 ];
