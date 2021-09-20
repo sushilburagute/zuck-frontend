@@ -1,15 +1,27 @@
+const defaultTheme = require("tailwindcss/defaultTheme");
+const colors = require("tailwindcss/colors");
+const brandColor = colors.orange;
+
+/**
+ * @type {import('tailwindcss/tailwind-config').TailwindConfig }
+ **/
 module.exports = {
-  purge: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
-  darkMode: false, // or 'media' or 'class'
+  mode: "jit",
+  darkMode: "class",
+  purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+
   theme: {
     extend: {
       fontFamily: {
-        sans: ["Inter"],
+        sans: ["Inter", ...defaultTheme.fontFamily.sans],
+      },
+      colors: {
+        gray: colors.gray,
+        brand: brandColor,
+      },
+      ringColor: {
+        DEFAULT: brandColor["500"],
       },
     },
   },
-  variants: {
-    extend: {},
-  },
-  plugins: [],
 };
