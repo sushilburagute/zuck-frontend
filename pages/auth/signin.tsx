@@ -1,5 +1,6 @@
 import { NextPage } from "next";
 import Head from "next/head";
+import { Header } from "../../components";
 
 const Login: NextPage = () => {
   return (
@@ -8,6 +9,7 @@ const Login: NextPage = () => {
         <title>Login | Zuck </title>
         <meta property="og:title" content="Login | Zuck" key="title" />
       </Head>
+      <Header />
       <div className="flex items-center justify-center w-screen h-screen bg-gradient-to-r from-red-300 via-brand-400 to-yellow-300">
         <div className="flex flex-col items-center p-6 bg-white rounded-md shadow-md h-2/3">
           <div>
