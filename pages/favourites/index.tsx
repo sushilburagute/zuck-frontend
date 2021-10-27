@@ -1,10 +1,10 @@
 import { NextPage } from "next";
-import { Header } from "./../../components/index";
+import { Navbar } from "./../../components/index";
 
 const Favourites: NextPage = () => {
   return (
     <>
-      <Header />
+      <Navbar />
       <div>Favourites</div>
       <footer>Footer links</footer>
     </>

@@ -1,11 +1,5 @@
 import React from "react";
-import {
-  HeartIcon,
-  SearchIcon,
-  ShoppingCartIcon,
-  SparklesIcon,
-  UserCircleIcon,
-} from "@heroicons/react/outline";
+import { HeartIcon, SearchIcon, ShoppingCartIcon, SparklesIcon } from "@heroicons/react/outline";
 
 interface INavLinks {
   id: number;
@@ -14,7 +8,7 @@ interface INavLinks {
   icon: React.ReactNode;
 }
 
-const iconStyles: string = "w-6 h-6 mr-2";
+const iconStyles: string = "w-6 h-6 md:mr-2";
 
 export const navlinks: INavLinks[] = [
   {
@@ -40,11 +34,5 @@ export const navlinks: INavLinks[] = [
     route: "/cart",
     name: "Cart",
     icon: <ShoppingCartIcon className={iconStyles} />,
-  },
-  {
-    id: 5,
-    route: "/auth/signin",
-    name: "Signin",
-    icon: <UserCircleIcon className={iconStyles} />,
   },
 ];

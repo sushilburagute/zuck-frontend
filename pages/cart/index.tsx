@@ -1,10 +1,10 @@
 import { NextPage } from "next";
-import { Header } from "./../../components/index";
+import { Navbar } from "./../../components/index";
 
 const Cart: NextPage = () => {
   return (
     <>
-      <Header />
+      <Navbar />
       <div>Cart</div>
       <footer>Footer links</footer>
     </>
