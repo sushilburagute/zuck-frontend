@@ -13,7 +13,7 @@ function Navbar() {
     <Popover className="relative bg-white">
       {({ open }) => (
         <>
-          <div className="flex items-center justify-between px-4 py-6 sm:px-6 md:justify-start md:space-x-10 md:px-24">
+          <div className="flex items-center justify-between px-4 py-6 shadow-lg sm:px-6 md:justify-start md:space-x-10 md:px-24">
             <div>
               <Link href="/restaurants">
                 <a className="text-4xl italic font-bold text-brand-600">Zuck</a>

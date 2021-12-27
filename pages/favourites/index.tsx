@@ -1,12 +1,26 @@
 import { NextPage } from "next";
-import { Navbar } from "./../../components/index";
+import { Navbar, Jumbotron, SEO, Layout, Card } from "./../../components/index";
 
 const Favourites: NextPage = () => {
   return (
     <>
+      <SEO title="Favourites | Zuck" />
       <Navbar />
-      <div>Favourites</div>
-      <footer>Footer links</footer>
+      <Jumbotron gradient="bg-white">
+        <h1 className="text-3xl font-bold text-gray-800">Favourites</h1>
+        <p className="mt-2 text-gray-600">
+          Dishes which are close to your heart will show up here.
+        </p>
+      </Jumbotron>
+      <Layout>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4 sm:grid-cols-2">
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+          <Card />
+        </div>
+      </Layout>
     </>
   );
 };
