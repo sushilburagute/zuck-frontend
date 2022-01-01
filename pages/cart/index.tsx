@@ -1,5 +1,13 @@
 import { NextPage } from "next";
-import { Navbar, SEO, Layout, Jumbotron, CartCard, BillCard } from "./../../components/index";
+import {
+  Navbar,
+  SEO,
+  Layout,
+  Jumbotron,
+  CartCard,
+  BillCard,
+  Footer,
+} from "./../../components/index";
 
 const Cart: NextPage = () => {
   return (
@@ -25,6 +33,7 @@ const Cart: NextPage = () => {
           </div>
         </div>
       </Layout>
+      <Footer />
     </>
   );
 };

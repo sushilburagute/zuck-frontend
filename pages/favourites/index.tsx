@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { Navbar, Jumbotron, SEO, Layout, Card } from "./../../components/index";
+import { Navbar, Jumbotron, SEO, Layout, Card, Footer } from "./../../components/index";
 
 const Favourites: NextPage = () => {
   return (
@@ -21,6 +21,7 @@ const Favourites: NextPage = () => {
           <Card />
         </div>
       </Layout>
+      <Footer />
     </>
   );
 };

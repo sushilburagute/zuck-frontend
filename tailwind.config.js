@@ -9,7 +9,7 @@ module.exports = {
   mode: "jit",
   darkMode: "class",
   purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
-
+  plugins: [require("@tailwindcss/forms"), require("@tailwindcss/aspect-ratio")],
   theme: {
     extend: {
       fontFamily: {
