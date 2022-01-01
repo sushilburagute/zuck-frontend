@@ -1,6 +1,8 @@
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
+import { ArrowRightIcon, ExternalLinkIcon } from "@heroicons/react/outline/";
+import Link from "next/link";
 
 const Home: NextPage = () => {
   return (
@@ -14,10 +16,16 @@ const Home: NextPage = () => {
           <div className="flex items-center justify-between w-full">
             <h1 className="text-4xl italic font-bold text-brand-600">Zuck</h1>
             <div>
-              <button className="px-6 py-2 text-sm font-semibold">Login</button>
-              <button className="px-6 py-2 text-sm font-semibold text-white bg-black rounded-sm">
-                Sign up
-              </button>
+              <Link href="/auth/login">
+                <a className="px-6 py-2 text-sm font-semibold bg-white hover:bg-gray-100 mr-4">
+                  Login
+                </a>
+              </Link>
+              <Link href="/auth/signup">
+                <a className="px-6 py-2 text-sm font-semibold text-white bg-gray-800 rounded-sm hover:bg-gray-900">
+                  Sign up
+                </a>
+              </Link>
             </div>
           </div>
           <div>
@@ -25,27 +33,28 @@ const Home: NextPage = () => {
               Feeling Hungry?
             </h1>
             <h2 className="my-2 text-xl font-light tracking-tight text-gray-800">
-              Order food from favourite restaurants.
+              Order food from favourite restaurant.
             </h2>
           </div>
           <div>
-            <input
-              className="w-3/6 p-4 border-2 md:w-3/6"
-              placeholder="Enter your delivery location"
-            />
-            <button className="px-6 py-4 mr-2 font-semibold text-white rounded-sm text-md bg-brand-600">
-              Find Food
-            </button>
+            <Link href="/food">
+              <a className="flex px-6 py-4 mr-2 font-semibold text-white rounded-sm w-max text-md bg-brand-600 hover:bg-brand-700">
+                Explore our Menu <ArrowRightIcon className="w-6 h-6 ml-4" />{" "}
+              </a>
+            </Link>
           </div>
           <div>
             <p className="font-light text-gray-600">Popular cities in India</p>
             <p className="mt-1 text-sm font-semibold text-gray-700">
-              Bangalore, Mumbai, Pune, Delhi, Hyderabad, Chennai, Change this later
+              Bangalore, Mumbai, Pune, Delhi, Hyderabad, Chennai
             </p>
           </div>
           <div>
-            <p className="font-light text-gray-600">Made by Sushil Buragute</p>
-            <p className="font-light text-gray-600">Sushs social link</p>
+            <Link href="https://sush.vercel.app/">
+              <a className="flex font-medium text-gray-600 align-middle" target="_blank">
+                Made by Sushil Buragute <ExternalLinkIcon className="w-6 h-6 ml-2 " />
+              </a>
+            </Link>
           </div>
         </div>
 

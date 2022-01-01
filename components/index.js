@@ -6,3 +6,4 @@ export { default as Card } from "./Card/Card";
 export { default as CartCard } from "./CartCard/CartCard";
 export { default as BillCard } from "./BillCard/BillCard";
 export { default as SEO } from "./SEO/SEO";
+export { default as Footer } from "./Footer/Footer";

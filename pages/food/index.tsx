@@ -1,10 +1,10 @@
 import { NextPage } from "next";
-import { Navbar, Layout, Jumbotron, SortBar, Card, SEO } from "./../../components/index";
+import { Navbar, Layout, Jumbotron, SortBar, Card, SEO, Footer } from "../../components/index";
 
-const Restaurants: NextPage = () => {
+const Food: NextPage = () => {
   return (
     <>
-      <SEO title="Restaurants | Zuck" />
+      <SEO title="Food | Zuck" />
       <Navbar />
       <Jumbotron gradient="bg-gradient-to-br from-brand-400 to-brand-600">
         <div className="flex justify-between">
@@ -15,7 +15,7 @@ const Restaurants: NextPage = () => {
         </div>
       </Jumbotron>
       <Layout>
-        <SortBar />
+        {/* <SortBar /> */}
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4 sm:grid-cols-2">
           <Card />
           <Card />
@@ -24,8 +24,9 @@ const Restaurants: NextPage = () => {
           <Card />
         </div>
       </Layout>
+      <Footer />
     </>
   );
 };
 
-export default Restaurants;
+export default Food;

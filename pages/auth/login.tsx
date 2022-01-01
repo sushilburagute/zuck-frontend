@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 
-const Signup: NextPage = () => {
+const Login: NextPage = () => {
   return (
     <>
       <Head>
@@ -19,13 +19,13 @@ const Signup: NextPage = () => {
                 <a className="text-4xl italic font-bold text-brand-600">Zuck</a>
               </Link>
               <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
-                Ready to create a new account?
+                Sign in to your account
               </h2>
               <p className="mt-2 text-sm text-gray-600 max-w">
                 Or{" "}
-                <Link href="/auth/login">
+                <Link href="/auth/signup">
                   <a href="#" className="font-medium text-brand-600 hover:text-brand-500">
-                    log in here.
+                    sign up here.
                   </a>
                 </Link>
               </p>
@@ -52,7 +52,7 @@ const Signup: NextPage = () => {
 
                   <div className="space-y-1">
                     <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                      Create a Password
+                      Password
                     </label>
                     <div className="mt-1">
                       <input
@@ -66,19 +66,23 @@ const Signup: NextPage = () => {
                     </div>
                   </div>
 
-                  <div className="space-y-1">
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                      Confirm Password
-                    </label>
-                    <div className="mt-1">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
                       <input
-                        id="password"
-                        name="password"
-                        type="password"
-                        autoComplete="current-password"
-                        required
-                        className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-brand-500 focus:border-brand-500 sm:text-sm"
+                        id="remember_me"
+                        name="remember_me"
+                        type="checkbox"
+                        className="w-4 h-4 border-gray-300 rounded text-brand-600 focus:ring-brand-500"
                       />
+                      <label htmlFor="remember_me" className="block ml-2 text-sm text-gray-900">
+                        Remember me
+                      </label>
+                    </div>
+
+                    <div className="text-sm">
+                      <a href="#" className="font-medium text-brand-600 hover:text-brand-500">
+                        Forgot your password?
+                      </a>
                     </div>
                   </div>
 
@@ -87,7 +91,7 @@ const Signup: NextPage = () => {
                       type="submit"
                       className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500"
                     >
-                      Create a new account
+                      Sign in
                     </button>
                   </div>
                 </form>
@@ -109,4 +113,4 @@ const Signup: NextPage = () => {
   );
 };
 
-export default Signup;
+export default Login;

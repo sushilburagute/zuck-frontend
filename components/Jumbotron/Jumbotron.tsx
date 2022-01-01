@@ -7,7 +7,7 @@ interface IProps {
 }
 
 const Jumbotron = ({ children, gradient }: IProps) => {
-  return <div className={clsx(" px-24 py-8 mx-auto", gradient)}>{children}</div>;
+  return <div className={clsx("px-8 md:px-24 py-8 mx-auto", gradient)}>{children}</div>;
 };
 
 export default Jumbotron;

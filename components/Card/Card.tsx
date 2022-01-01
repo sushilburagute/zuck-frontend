@@ -1,6 +1,8 @@
 import { HeartIcon as HeartIconOutline } from "@heroicons/react/outline";
 import { HeartIcon as HeartIconSolid } from "@heroicons/react/solid";
 
+import Link from "next/link";
+
 const Card = () => {
   return (
     <>
@@ -21,9 +23,11 @@ const Card = () => {
           </div>
           <hr />
           <div>
-            <button className="w-full py-2 text-sm font-bold tracking-tight capitalize transition duration-300 ease-in-out rounded text-brand-400 hover:bg-brand-100 hover:text-brand-500">
-              ADD TO CART
-            </button>
+            <Link href="/food/123" passHref>
+              <button className="w-full py-2 text-sm font-bold tracking-tight capitalize transition duration-300 ease-in-out rounded text-brand-400 hover:bg-brand-100 hover:text-brand-500">
+                ADD TO CART
+              </button>
+            </Link>
           </div>
         </div>
       </div>

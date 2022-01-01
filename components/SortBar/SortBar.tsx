@@ -35,7 +35,7 @@ const SortBar = () => {
     <>
       <div className="z-10 flex items-end justify-between my-8">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">198 restaurants</h1>
+          <h1 className="text-3xl font-bold text-gray-800">198 Dishes</h1>
         </div>
         <div className="flex">
           {sortValues.map(({ name, query }) => {

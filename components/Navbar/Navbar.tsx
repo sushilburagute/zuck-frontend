@@ -15,7 +15,7 @@ function Navbar() {
         <>
           <div className="flex items-center justify-between px-4 py-6 shadow-lg sm:px-6 md:justify-start md:space-x-10 md:px-24">
             <div>
-              <Link href="/restaurants">
+              <Link href="/food">
                 <a className="text-4xl italic font-bold text-brand-600">Zuck</a>
               </Link>
             </div>
@@ -45,15 +45,14 @@ function Navbar() {
                 })}
               </div>
               <div className="flex items-center md:ml-12">
-                <a href="#" className="text-base font-medium text-gray-500 hover:text-gray-900">
-                  Sign in
-                </a>
-                <a
-                  href="#"
-                  className="inline-flex items-center justify-center px-4 py-2 ml-8 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-brand-600 hover:bg-brand-700"
-                >
-                  Sign up
-                </a>
+                <Link href="/auth/login">
+                  <a className="text-base font-medium text-gray-500 hover:text-gray-900">Login</a>
+                </Link>
+                <Link href="/auth/signup">
+                  <a className="inline-flex items-center justify-center px-4 py-2 ml-8 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-brand-600 hover:bg-brand-700">
+                    Sign up
+                  </a>
+                </Link>
               </div>
             </div>
           </div>
@@ -71,13 +70,13 @@ function Navbar() {
             <Popover.Panel
               focus
               static
-              className="absolute inset-x-0 top-0 p-2 transition origin-top-right transform md:hidden"
+              className="absolute inset-x-0 top-0 p-2 transition origin-top-right transform md:hidden z-10"
             >
               <div className="bg-white divide-y-2 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 divide-gray-50">
                 <div className="px-5 pt-5 pb-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <Link href="/restaurants">
+                      <Link href="/food">
                         <a className="text-4xl italic font-bold text-brand-600">Zuck</a>
                       </Link>
                     </div>
@@ -110,17 +109,21 @@ function Navbar() {
                 </div>
                 <div className="px-5 py-6">
                   <div className="mt-6">
-                    <a
-                      href="#"
-                      className="flex items-center justify-center w-full px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-brand-600 hover:bg-brand-700"
-                    >
-                      Sign up
-                    </a>
-                    <p className="mt-6 text-base font-medium text-center text-gray-500">
-                      Are you an existing Foodie?
-                      <a href="#" className="text-brand-600 hover:text-brand-500">
-                        Sign in
+                    <Link href="/auth/login">
+                      <a
+                        href="#"
+                        className="flex items-center justify-center w-full px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-brand-600 hover:bg-brand-700"
+                      >
+                        Login
                       </a>
+                    </Link>
+                    <p className="mt-6 text-base font-medium text-center text-gray-500">
+                      Ready to create a new account?{" "}
+                      <Link href="/auth/signup">
+                        <a href="#" className="text-brand-600 hover:text-brand-500">
+                          Sign up
+                        </a>
+                      </Link>
                     </p>
                   </div>
                 </div>
