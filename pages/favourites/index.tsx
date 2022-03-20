@@ -13,13 +13,7 @@ const Favourites: NextPage = () => {
         </p>
       </Jumbotron>
       <Layout>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-4 sm:grid-cols-2">
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-          <Card />
-        </div>
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-4 sm:grid-cols-2"></div>
       </Layout>
       <Footer />
     </>

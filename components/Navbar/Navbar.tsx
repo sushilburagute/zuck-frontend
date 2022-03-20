@@ -4,8 +4,8 @@ import { useRouter } from "next/dist/client/router";
 import clsx from "clsx";
 
 import { Fragment } from "react";
-import { Popover, Transition } from "@headlessui/react";
-import { MenuIcon, XIcon } from "@heroicons/react/outline";
+import { Popover, Transition, Menu } from "@headlessui/react";
+import { ChevronDownIcon, MenuIcon, UserCircleIcon, XIcon } from "@heroicons/react/outline";
 
 function Navbar() {
   const nextRoute = useRouter();
@@ -53,6 +53,44 @@ function Navbar() {
                     Sign up
                   </a>
                 </Link>
+                {/* User signed in */}
+                {/* <div>
+                  <Menu as="div" className="relative inline-block text-left">
+                    <div>
+                      <Menu.Button className="inline-flex justify-center w-full px-4 py-2 text-sm font-medium text-white bg-brand-500 rounded-md bg-opacity-90 hover:bg-opacity-100 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+                        <UserCircleIcon className="w-5 h-5 mr-2 text-white" aria-hidden="true" />
+                        Sushil Buragute
+                        <ChevronDownIcon
+                          className="w-5 h-5 ml-2 -mr-1 text-white"
+                          aria-hidden="true"
+                        />
+                      </Menu.Button>
+                    </div>
+                    <Transition
+                      as={Fragment}
+                      enter="transition ease-out duration-100"
+                      enterFrom="transform opacity-0 scale-95"
+                      enterTo="transform opacity-100 scale-100"
+                      leave="transition ease-in duration-75"
+                      leaveFrom="transform opacity-100 scale-100"
+                      leaveTo="transform opacity-0 scale-95"
+                    >
+                      <Menu.Items className="absolute right-0 w-56 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <div className="px-1 py-1 ">
+                          <Menu.Item>
+                            <button
+                              className={
+                                "bg-white text-gray-600 group flex rounded-md items-center w-full px-2 py-2 text-sm hover:bg-brand-100"
+                              }
+                            >
+                              Logout
+                            </button>
+                          </Menu.Item>
+                        </div>
+                      </Menu.Items>
+                    </Transition>
+                  </Menu>
+                </div> */}
               </div>
             </div>
           </div>
@@ -70,7 +108,7 @@ function Navbar() {
             <Popover.Panel
               focus
               static
-              className="absolute inset-x-0 top-0 p-2 transition origin-top-right transform md:hidden z-10"
+              className="absolute inset-x-0 top-0 p-2 transition origin-top-right transform md:hidden z-30"
             >
               <div className="bg-white divide-y-2 rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 divide-gray-50">
                 <div className="px-5 pt-5 pb-6">
@@ -125,6 +163,10 @@ function Navbar() {
                         </a>
                       </Link>
                     </p>
+                    {/* User signed in */}
+                    {/* <button className="flex items-center justify-center w-full px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-brand-600 hover:bg-brand-700">
+                      Logout
+                    </button> */}
                   </div>
                 </div>
               </div>

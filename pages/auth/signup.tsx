@@ -2,8 +2,34 @@ import { NextPage } from "next";
 import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
+import { useRouter } from "next/router";
+
+import { useForm } from "react-hook-form";
+import { useMutation } from "react-query";
+import axios from "axios";
+import toast from "react-hot-toast";
+
+import Spinner from "../../components/Spinner/Spinner";
+
+const errorNotify = (error: any) => toast.error(`Error: ${error}`);
 
 const Signup: NextPage = () => {
+  const { register, handleSubmit } = useForm();
+  const router = useRouter();
+
+  const { mutate, isLoading, isSuccess, isError, error } = useMutation(async (data: any) => {
+    const res = await axios.post("http://localhost:5000/api/auth/sign-up", data);
+
+    if (isSuccess && res.data?.msg === "Your Account has been created") {
+      localStorage.setItem("user", JSON.stringify(res.data?.token));
+      router.push("/food");
+    }
+  });
+
+  const onSubmit = handleSubmit((data) => {
+    mutate(data);
+  });
+
   return (
     <>
       <Head>
@@ -33,7 +59,36 @@ const Signup: NextPage = () => {
 
             <div className="mt-8">
               <div className="mt-6">
-                <form action="#" method="POST" className="space-y-6">
+                <form action="#" method="POST" className="space-y-6" onSubmit={onSubmit}>
+                  <div className="space-y-1">
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                      First Name
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        id="firstName"
+                        type="text"
+                        required
+                        autoFocus
+                        className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-brand-500 focus:border-brand-500 sm:text-sm"
+                        {...register("firstName", { required: true, maxLength: 20 })}
+                      />
+                    </div>
+                  </div>
+                  <div className="space-y-1">
+                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
+                      Last Name
+                    </label>
+                    <div className="mt-1">
+                      <input
+                        id="lasttName"
+                        type="text"
+                        required
+                        className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-brand-500 focus:border-brand-500 sm:text-sm"
+                        {...register("lastName", { required: true, maxLength: 20 })}
+                      />
+                    </div>
+                  </div>
                   <div>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                       Email address
@@ -41,10 +96,14 @@ const Signup: NextPage = () => {
                     <div className="mt-1">
                       <input
                         id="email"
-                        name="email"
                         type="email"
                         autoComplete="email"
                         required
+                        {...register("email", {
+                          required: true,
+                          pattern:
+                            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                        })}
                         className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-brand-500 focus:border-brand-500 sm:text-sm"
                       />
                     </div>
@@ -57,29 +116,17 @@ const Signup: NextPage = () => {
                     <div className="mt-1">
                       <input
                         id="password"
-                        name="password"
                         type="password"
                         autoComplete="current-password"
                         required
+                        {...register("password", { required: true, maxLength: 20 })}
                         className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-brand-500 focus:border-brand-500 sm:text-sm"
                       />
                     </div>
-                  </div>
-
-                  <div className="space-y-1">
-                    <label htmlFor="password" className="block text-sm font-medium text-gray-700">
-                      Confirm Password
-                    </label>
-                    <div className="mt-1">
-                      <input
-                        id="password"
-                        name="password"
-                        type="password"
-                        autoComplete="current-password"
-                        required
-                        className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-brand-500 focus:border-brand-500 sm:text-sm"
-                      />
-                    </div>
+                    <p className="text-xs text-gray-700">
+                      The password needs to have a capital letter, a number, a special character,
+                      and should be 8 characters long.
+                    </p>
                   </div>
 
                   <div>
@@ -87,10 +134,11 @@ const Signup: NextPage = () => {
                       type="submit"
                       className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500"
                     >
-                      Create a new account
+                      {isLoading ? <Spinner textColor="text-white" /> : "Create a new account"}
                     </button>
                   </div>
                 </form>
+                {isError && errorNotify(error)}
               </div>
             </div>
           </div>
