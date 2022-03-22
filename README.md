@@ -23,7 +23,5 @@
 ## Misc
 
 1. useAuth hook
-1. Card is fav or not
-1. dish page ui to add more quantity
 1. Razorpay int
 1. g-analytics int

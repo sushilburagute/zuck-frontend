@@ -12,7 +12,6 @@ import clsx from "clsx";
 const Search: NextPage = () => {
   const [searchQuery, setSearchQuery] = useState<String>("");
   const [searchResult, setSearchResult] = useState<[IDish] | [] | null>(null);
-  const [applyGrid, setApplyGrid] = useState<boolean>(false);
   const { isLoading, isError, data, error } = useQuery("dishes", () =>
     axios("http://localhost:5000/api/food")
   );
@@ -31,13 +30,6 @@ const Search: NextPage = () => {
         dish.name.toLocaleLowerCase("en-US") == searchQuery.toLocaleLowerCase("en-US")
     );
     setSearchResult([...result]);
-    if (searchResult?.length !== undefined) {
-      if (searchResult?.length > 1 || searchResult === undefined) {
-        setApplyGrid(true);
-      } else {
-        setApplyGrid(false);
-      }
-    }
   }
 
   return (
@@ -71,12 +63,7 @@ const Search: NextPage = () => {
             </div>
           </form>
         </div>
-        <div
-          className={clsx(
-            applyGrid && "grid grid-cols-1 gap-8 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 mt-4",
-            !applyGrid && "inline-flex justify-center items-center mt-4"
-          )}
-        >
+        <div>
           {!data || isLoading ? (
             <div className="w-full inline-flex justify-center items-center">
               <Spinner />
@@ -95,22 +82,24 @@ const Search: NextPage = () => {
               </div>
             </div>
           ) : (
-            searchResult.map((dish: IDish) => {
-              return (
-                <Card
-                  _id={dish._id}
-                  name={dish.name}
-                  imageSrc={dish.image}
-                  type={dish.type}
-                  rating={dish.rating}
-                  deliveryTime={dish.deliveryTime}
-                  price={dish.price}
-                  veg={dish.veg}
-                  discount={dish.discount}
-                  key={dish._id}
-                />
-              );
-            })
+            <div className="grid grid-cols-1 gap-8 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 mt-4">
+              {searchResult.map((dish: IDish) => {
+                return (
+                  <Card
+                    _id={dish._id}
+                    name={dish.name}
+                    imageSrc={dish.image}
+                    type={dish.type}
+                    rating={dish.rating}
+                    deliveryTime={dish.deliveryTime}
+                    price={dish.price}
+                    veg={dish.veg}
+                    discount={dish.discount}
+                    key={dish._id}
+                  />
+                );
+              })}
+            </div>
           )}
         </div>
       </Layout>

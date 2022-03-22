@@ -8,23 +8,32 @@ import { useForm } from "react-hook-form";
 import { useMutation } from "react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
+import { useContext } from "react";
 
 import Spinner from "../../components/Spinner/Spinner";
+import { UserContext } from "../../context/UserContext";
 
 const errorNotify = (error: any) => toast.error(`Error: ${error}`);
 
 const Signup: NextPage = () => {
   const { register, handleSubmit } = useForm();
   const router = useRouter();
+  const { setUser } = useContext(UserContext);
 
-  const { mutate, isLoading, isSuccess, isError, error } = useMutation(async (data: any) => {
-    const res = await axios.post("http://localhost:5000/api/auth/sign-up", data);
-
-    if (isSuccess && res.data?.msg === "Your Account has been created") {
-      localStorage.setItem("user", JSON.stringify(res.data?.token));
-      router.push("/food");
+  const { mutate, isLoading, isSuccess, isError, error } = useMutation(
+    async (data: any) => {
+      return await axios.post("http://localhost:5000/api/auth/sign-up", data);
+    },
+    {
+      onSuccess: (data) => {
+        if (data.data?.msg === "Your Account has been created") {
+          localStorage.setItem("user", JSON.stringify(data.data?.token));
+          setUser({ firstName: data.data?.firstName, token: data.data?.token });
+          router.push("/food");
+        }
+      },
     }
-  });
+  );
 
   const onSubmit = handleSubmit((data) => {
     mutate(data);
