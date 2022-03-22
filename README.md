@@ -5,19 +5,20 @@
 1. Hero Images
 1. Pagination
 
-## /search
+## /food/:id
 
-1. Better Search UI
-1. Placeholder before search, no items
+1. Fav int,
+1. update quantity / remove
 
 ## /fav
 
-1. Placeholder for no favs / not signed in.
+1. Dynamic Favs
 
 ## /cart
 
 1. Layout needs touch up.
 1. Add offer code int
+1. Dynamic Cart
 
 ## Misc
 
