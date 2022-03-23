@@ -25,3 +25,4 @@
 1. useAuth hook
 1. Razorpay int
 1. g-analytics int
+1. Better error handling on API calls

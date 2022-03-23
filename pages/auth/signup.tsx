@@ -28,6 +28,7 @@ const Signup: NextPage = () => {
       onSuccess: (data) => {
         if (data.data?.msg === "Your Account has been created") {
           localStorage.setItem("user", JSON.stringify(data.data?.token));
+          localStorage.setItem("firstName", JSON.stringify(data.data?.firstName));
           setUser({ firstName: data.data?.firstName, token: data.data?.token });
           router.push("/food");
         }

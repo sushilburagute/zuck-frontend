@@ -27,7 +27,8 @@ const Login: NextPage = () => {
     {
       onSuccess: (data) => {
         if (data.data?.msg === "Logged in successfully !") {
-          localStorage.setItem("user", JSON.stringify(data.data?.token));
+          localStorage.setItem("token", JSON.stringify(data.data?.token));
+          localStorage.setItem("firstName", JSON.stringify(data.data?.firstName));
           setUser({ firstName: data.data?.firstName, token: data.data?.token });
           router.push("/food");
         }
