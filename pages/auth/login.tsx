@@ -1,5 +1,4 @@
 import { NextPage } from "next";
-import Head from "next/head";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -12,6 +11,7 @@ import { useContext } from "react";
 
 import Spinner from "../../components/Spinner/Spinner";
 import { UserContext } from "../../context/UserContext";
+import { SEO } from "../../components";
 
 const errorNotify = (error: any) => toast.error(`Error: ${error}`);
 
@@ -41,10 +41,7 @@ const Login: NextPage = () => {
   });
   return (
     <>
-      <Head>
-        <title>Login | Zuck </title>
-        <meta property="og:title" content="Login | Zuck" key="title" />
-      </Head>
+      <SEO title="Login" />
 
       <div className="flex min-h-screen bg-white">
         <div className="flex flex-col justify-center flex-1 px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
