@@ -1,43 +1,74 @@
-import { NextPage } from "next";
-import { useRouter } from "next/router";
-import { Fragment, useState } from "react";
+import { NextPage, NextPageContext } from "next";
 
-import { Navbar, SEO, Footer } from "../../components/index";
-import { RadioGroup } from "@headlessui/react";
-import { ShieldCheckIcon } from "@heroicons/react/outline";
-import { CheckIcon, QuestionMarkCircleIcon, StarIcon } from "@heroicons/react/solid";
-import { useQuery } from "react-query";
+import { Navbar, SEO, Footer, VegIcon, Spinner } from "../../components/index";
+import {
+  ShieldCheckIcon,
+  HeartIcon as HeartIconOutline,
+  PlusIcon,
+  MinusIcon,
+  TrashIcon,
+  CurrencyRupeeIcon,
+} from "@heroicons/react/outline";
+import { CheckIcon, StarIcon, HeartIcon as HeartIconSolid } from "@heroicons/react/solid";
 import axios from "axios";
 import clsx from "clsx";
-import Spinner from "./../../components/Spinner/Spinner";
 import Image from "next/image";
-import { IDish } from "../../types/IDish";
+
+import { IDish } from "./../../types/IDish";
+import useFavs from "./../../hooks/useFavs";
+import useCart from "./../../hooks/useCart";
+import { useEffect, useState } from "react";
+import { ICart } from "../../types/ICart";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-const FoodPage: NextPage = () => {
-  const router = useRouter();
-  const { isLoading, isError, data, error } = useQuery("singleDish", () =>
-    axios(clsx("http://localhost:5000/api/food/" + router.query.id))
-  );
+interface IProps {
+  dish: IDish;
+}
 
-  if (isLoading)
-    return (
-      <>
-        <Spinner />
-      </>
-    );
-  const dish: IDish = data?.data.dishItem[0];
+const FoodPage: NextPage<IProps> = ({ dish }) => {
+  const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
+  const [cartQuantity, setCartQuantity] = useState<number>(0);
+  const [inCart, setInCart] = useState<boolean>(false);
+  const { mutate: favMutate, isFav, isFavLoading } = useFavs(dish._id);
+  const { mutate: cartMutate, cartData, isCartLoading } = useCart(dish._id);
 
-  console.log(dish);
-  if (isError)
-    return (
-      <>
-        <div>Error! </div>
-      </>
-    );
+  useEffect(() => {
+    if (!isCartLoading && dish._id) {
+      cartData?.data.foodCart.map((cartItem: ICart) => {
+        cartItem._id._id === dish._id && setCartQuantity(cartItem.quantity);
+        cartItem._id._id === dish._id && setInCart(true);
+      });
+    }
+  }, [isCartLoading, cartData, dish._id]);
+
+  function handleFav() {
+    favMutate({ _id: dish._id, type: isFav ? "REMOVE_FROM_FAVOURITES" : "ADD_TO_FAVOURITES" });
+  }
+
+  function handleAddToCart() {
+    cartMutate({ _id: dish._id, type: "ADD_TO_CART", quantity: 1 });
+  }
+  function handleDeletefromCart() {
+    cartMutate({ _id: dish._id, type: "REMOVE_FROM_CART", quantity: cartQuantity });
+    setInCart(false);
+  }
+
+  function handleAddQuantityToCart() {
+    cartMutate({ _id: dish._id, type: "ADD_QUANTITY_IN_CART", quantity: cartQuantity });
+    setCartQuantity(cartQuantity + 1);
+    setIsButtonDisabled(false);
+  }
+  function handleSubtractQuantityCart() {
+    if (cartQuantity !== 1) {
+      cartMutate({ _id: dish._id, type: "SUBTRACT_QUANTITY_IN_CART", quantity: cartQuantity });
+      setCartQuantity(cartQuantity - 1);
+    } else {
+      setIsButtonDisabled(true);
+    }
+  }
 
   const breadcrumbs = [
     { id: 1, name: "Food", href: "/food" },
@@ -82,10 +113,25 @@ const FoodPage: NextPage = () => {
                   </ol>
                 </nav>
 
-                <div className="mt-4">
-                  <h1 className="text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
-                    {dish.name}
-                  </h1>
+                <div className="inline-flex items-center justify-between w-full mt-4">
+                  <div className="inline-flex items-center">
+                    <VegIcon isVeg={dish.veg} />
+                    <h1 className="ml-5 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
+                      {dish.name}
+                    </h1>
+                  </div>
+                  <div
+                    className="inline-flex items-center justify-center p-3 bg-white rounded-full hover:bg-red-200"
+                    onClick={handleFav}
+                  >
+                    {isFavLoading ? (
+                      <Spinner />
+                    ) : isFav ? (
+                      <HeartIconSolid className="w-5 h-5 text-red-400" />
+                    ) : (
+                      <HeartIconOutline className="w-5 h-5 text-red-500" />
+                    )}
+                  </div>
                 </div>
 
                 <section aria-labelledby="information-heading" className="mt-4">
@@ -94,7 +140,9 @@ const FoodPage: NextPage = () => {
                   </h2>
 
                   <div className="flex items-center">
-                    <p className="text-lg text-gray-900 sm:text-xl">₹ {dish.price}</p>
+                    <p className="text-lg text-gray-700 sm:text-xl flex items-center">
+                      <CurrencyRupeeIcon className="w-5 h-5 mr-1" /> {dish.price}
+                    </p>
 
                     <div className="pl-4 ml-4 border-l border-gray-300">
                       <h2 className="sr-only">Reviews</h2>
@@ -105,7 +153,9 @@ const FoodPage: NextPage = () => {
                               <StarIcon
                                 key={rating}
                                 className={classNames(
-                                  dish.rating > rating ? "text-yellow-400" : "text-gray-300",
+                                  Math.round(dish.rating) > rating
+                                    ? "text-yellow-400"
+                                    : "text-gray-300",
                                   "h-5 w-5 flex-shrink-0"
                                 )}
                                 aria-hidden="true"
@@ -130,6 +180,50 @@ const FoodPage: NextPage = () => {
                     />
                     <p className="ml-2 text-sm text-gray-500">In stock and ready to ship</p>
                   </div>
+                  <div className="mt-10">
+                    {inCart ? (
+                      <>
+                        <div className="inline-flex justify-between w-full">
+                          <div className="inline-flex items-center justify-between">
+                            <p className="mr-5 font-medium text-gray-500">Update Quantity:</p>
+                            <div className="inline-flex items-center border-2 rounded-md">
+                              <button
+                                className={clsx(
+                                  "p-2 mr-5 text-gray-700 bg-white border-2 rounded-md hover:bg-brand-100 hover:text-brand-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-brand-500",
+                                  isButtonDisabled && "cursor-not-allowed"
+                                )}
+                                onClick={handleSubtractQuantityCart}
+                                disabled={isButtonDisabled}
+                              >
+                                <MinusIcon className="w-5 h-5" />
+                              </button>
+                              <p className="mr-5 font-medium text-gray-500">{cartQuantity}</p>
+                              <button
+                                className="p-2 text-gray-700 bg-white border-2 rounded-md hover:bg-brand-100 hover:text-brand-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-brand-500"
+                                onClick={handleAddQuantityToCart}
+                              >
+                                <PlusIcon className="w-5 h-5" />
+                              </button>
+                            </div>
+                          </div>
+                          <button
+                            className="p-2 text-gray-700 bg-white border-2 rounded-md hover:bg-red-100 hover:text-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-brand-500"
+                            onClick={handleDeletefromCart}
+                          >
+                            <TrashIcon className="w-5 h-5" />
+                          </button>
+                        </div>
+                      </>
+                    ) : (
+                      <button
+                        type="submit"
+                        className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white border border-transparent rounded-md bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-brand-500"
+                        onClick={handleAddToCart}
+                      >
+                        Add to cart
+                      </button>
+                    )}
+                  </div>
                 </section>
               </div>
 
@@ -143,18 +237,6 @@ const FoodPage: NextPage = () => {
               {/* Product form */}
               <div className="mt-10 lg:max-w-lg lg:col-start-1 lg:row-start-2 lg:self-start">
                 <section aria-labelledby="options-heading">
-                  <h2 id="options-heading" className="sr-only">
-                    Product options
-                  </h2>
-
-                  <div className="mt-10">
-                    <button
-                      type="submit"
-                      className="flex items-center justify-center w-full px-8 py-3 text-base font-medium text-white border border-transparent rounded-md bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50 focus:ring-brand-500"
-                    >
-                      Add to cart
-                    </button>
-                  </div>
                   <div className="mt-6 text-center">
                     <a href="#" className="inline-flex text-base font-medium group">
                       <ShieldCheckIcon
@@ -175,6 +257,15 @@ const FoodPage: NextPage = () => {
       </div>
     </>
   );
+};
+
+FoodPage.getInitialProps = async (ctx: NextPageContext) => {
+  const { id } = ctx.query;
+
+  const res = await axios.get(clsx("http://localhost:5000/api/food/" + id));
+  const dish = await res.data.dishItem[0];
+
+  return { dish };
 };
 
 export default FoodPage;

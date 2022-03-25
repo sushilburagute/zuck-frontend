@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import { Navbar, Footer, Layout, Jumbotron } from "./../../components/index";
+import { Navbar, Footer, Layout, Jumbotron } from "../components/index";
 import clsx from "clsx";
 
 const Offers: NextPage = () => {
@@ -35,8 +35,8 @@ const Offers: NextPage = () => {
       <Navbar />
       <Jumbotron gradient="bg-white">
         <h1 className="text-3xl font-bold text-gray-800">Offers</h1>
-        <p className="mt-4 text-gray-600 text-sm md:text-lg">Looking for a sweet deal? 😋</p>
-        <p className="mt-1 text-gray-600 text-sm md:text-lg">We got you covered.</p>
+        <p className="mt-2 text-gray-600 ">Looking for a sweet deal? 😋</p>
+        <p className="mt-1 text-gray-600 ">We got you covered.</p>
       </Jumbotron>
       <Layout>
         <div className="grid grid-cols-1 gap-8 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 mt-8">

@@ -10,6 +10,9 @@ import Image from "next/image";
 import Link from "next/link";
 import clsx from "clsx";
 
+import useFavs from "./../../hooks/useFavs";
+import VegIcon from "../VegIcon/VegIcon";
+
 export interface ICard {
   name: string;
   type: string;
@@ -23,6 +26,12 @@ export interface ICard {
 }
 
 const Card = ({ _id, name, type, rating, deliveryTime, imageSrc, price, discount, veg }: ICard) => {
+  const { mutate, isFav } = useFavs(_id);
+
+  function handleClick() {
+    mutate({ _id: _id, type: isFav ? "REMOVE_FROM_FAVOURITES" : "ADD_TO_FAVOURITES" });
+  }
+
   function ratingColor(rating: number): string {
     if (rating >= 4.5) {
       return "bg-green-700";
@@ -53,30 +62,27 @@ const Card = ({ _id, name, type, rating, deliveryTime, imageSrc, price, discount
         <div className="relative w-full h-40 bg-gray-300 rounded-sm">
           <Image src={imageSrc} alt={name} layout="fill" objectFit="cover" />
 
-          <div className="absolute p-1 rounded-full w-7 h-7 hover:bg-red-200 top-2 left-2 bg-white">
-            <HeartIconOutline className="text-red-400" />
-            {/* <HeartIconSolid className="text-red-500" /> */}
+          <div
+            className="absolute p-1 bg-white rounded-full w-7 h-7 hover:bg-red-200 top-2 left-2"
+            onClick={handleClick}
+          >
+            {isFav ? (
+              <HeartIconSolid className="text-red-400" />
+            ) : (
+              <HeartIconOutline className="text-red-500" />
+            )}
           </div>
         </div>
         <div className="mt-4 space-y-3">
           <div className="flex justify-between item-center">
             <h1 className="text-2xl font-medium text-gray-800 ">{name}</h1>
-            <div
-              className={clsx(
-                "inline-flex items-center border-2  w-6 h-6 justify-center",
-                veg ? "border-green-700" : "border-red-700"
-              )}
-            >
-              <div
-                className={clsx("w-3 h-3 rounded-full", veg ? "bg-green-700" : "bg-red-700")}
-              ></div>
-            </div>
+            <VegIcon isVeg={veg}/>
           </div>
           <div className="flex justify-between">
             <h3 className="text-sm font-light text-gray-600 ">{foodType(type)}</h3>
             {discount !== 0 && (
-              <div className="px-2 py-1 text-sm text-red-600 inline-flex items-center">
-                <TicketIcon className="h-4 w-4 mr-2" /> {discount}%
+              <div className="inline-flex items-center px-2 py-1 text-sm text-red-600">
+                <TicketIcon className="w-4 h-4 mr-2" /> {discount}%
               </div>
             )}
           </div>
@@ -87,14 +93,14 @@ const Card = ({ _id, name, type, rating, deliveryTime, imageSrc, price, discount
                 ratingColor(rating)
               )}
             >
-              <StarIcon className="h-4 w-4 mr-1" />
+              <StarIcon className="w-4 h-4 mr-1" />
               {rating}
             </div>
-            <div className="px-2 py-1 text-sm text-gray-500 inline-flex items-center">
-              <ClockIcon className="h-4 w-4 mr-1" /> {deliveryTime}min
+            <div className="inline-flex items-center px-2 py-1 text-sm text-gray-500">
+              <ClockIcon className="w-4 h-4 mr-1" /> {deliveryTime}min
             </div>
-            <div className="px-2 py-1 text-sm text-gray-500 inline-flex items-center">
-              <CurrencyRupeeIcon className="h-4 w-4 mr-1" /> {price}
+            <div className="inline-flex items-center px-2 py-1 text-sm text-gray-500">
+              <CurrencyRupeeIcon className="w-4 h-4 mr-1" /> {price}
             </div>
           </div>
           <hr />

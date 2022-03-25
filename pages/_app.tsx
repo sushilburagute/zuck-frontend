@@ -18,7 +18,9 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const firstName = localStorage.getItem("firstName");
     const token = localStorage.getItem("token");
-    firstName !== null && token !== null && setUser({ firstName: firstName, token: token });
+    firstName !== null &&
+      token !== null &&
+      setUser({ firstName: JSON.parse(firstName), token: JSON.parse(token) });
   }, []);
 
   return (

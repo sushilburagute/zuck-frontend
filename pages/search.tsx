@@ -1,11 +1,11 @@
 import { NextPage } from "next";
-import { Navbar, SEO, Footer, Layout, Card, Jumbotron } from "../../components";
+import { Navbar, SEO, Footer, Layout, Card, Jumbotron } from "../components";
 import { useQuery } from "react-query";
 import axios from "axios";
-import Spinner from "./../../components/Spinner/Spinner";
+import Spinner from "../components/Spinner/Spinner";
 import { SearchIcon } from "@heroicons/react/outline";
 import { ChangeEvent, useState } from "react";
-import { IDish, DishType } from "../../types/IDish";
+import { IDish } from "../types/IDish";
 import Image from "next/image";
 import clsx from "clsx";
 
