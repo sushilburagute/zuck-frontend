@@ -10,24 +10,36 @@ interface IProps {
 }
 
 const BillCard = ({ isCartLoading, cartData }: IProps) => {
-  const [total, setTotal] = useState<number>(0);
-  const [gstTax, setGtsTax] = useState<number>(0);
-
   const [offer, setOffer] = useState<string>("none");
 
-  // if (!isCartLoading) {
-  //   cartData?.data.foodCart.map((cartItem: ICart) => {
-  //     cartItem._id.discount === 0
-  //       ? setTotal(total + Math.round(cartItem.quantity * cartItem._id.price))
-  //       : setTotal(
-  //           total +
-  //             Math.round(
-  //               cartItem.quantity *
-  //                 (cartItem._id.price - cartItem._id.price * cartItem._id.discount * 0.01)
-  //             )
-  //         );
-  //   });
-  // }
+  const deliveryCharge = 63;
+
+  function findGST() {
+    return findTotal() * 0.05;
+  }
+
+  function findTotal(): number {
+    if (!isCartLoading) {
+      const priceArr = cartData?.data.foodCart.map((cartItem: ICart) => {
+        if (cartItem._id.discount === 0) {
+          return Math.round(cartItem.quantity * cartItem._id.price);
+        } else {
+          return Math.round(
+            cartItem.quantity *
+              (cartItem._id.price - cartItem._id.price * cartItem._id.discount * 0.01)
+          );
+        }
+      });
+      if (priceArr !== undefined) {
+        const totalBill = priceArr.reduce(
+          (previousValue: number, currentValue: number) => previousValue + currentValue,
+          0
+        );
+
+        return totalBill;
+      } else return 0;
+    } else return 0;
+  }
 
   return (
     <>
@@ -75,14 +87,15 @@ const BillCard = ({ isCartLoading, cartData }: IProps) => {
         <div className="flex justify-between">
           <h3 className="font-semibold text-gray-700">GST 5%</h3>
           <h3 className="font-semibold text-gray-700 flex items-center">
-            <CurrencyRupeeIcon className="w-5 h-5 mr-1" /> {gstTax}
+            <CurrencyRupeeIcon className="w-5 h-5 mr-1" /> {findGST().toString()}
           </h3>
         </div>
         <hr />
         <div className="flex justify-between">
           <h3 className="font-semibold text-gray-800">To pay</h3>
           <h3 className="font-semibold text-gray-800 flex items-center">
-            <CurrencyRupeeIcon className="w-5 h-5 mr-1" /> {total}
+            <CurrencyRupeeIcon className="w-5 h-5 mr-1" />{" "}
+            {(findTotal() + deliveryCharge).toString()}
           </h3>
         </div>
       </div>

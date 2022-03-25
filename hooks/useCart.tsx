@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
+import toast from "react-hot-toast";
 import { QueryClient, useMutation, useQuery } from "react-query";
 import { UserContext } from "../context/UserContext";
 
@@ -21,6 +22,7 @@ export default function useCart(_id?: string) {
       }),
     {
       refetchOnMount: true,
+      enabled: user.token !== "",
     }
   );
 
@@ -37,7 +39,11 @@ export default function useCart(_id?: string) {
     },
     {
       onSuccess: () => {
+        toast.success("Cart Updated");
         refetch();
+      },
+      onError: () => {
+        toast.error("There was some error completing your request.");
       },
     }
   );

@@ -11,7 +11,7 @@ const Toast = () => {
         toastOptions={{
           style: {
             borderRadius: "8px",
-            background: "#ffedd5",
+            background: "#fff",
             color: "#333",
           },
         }}

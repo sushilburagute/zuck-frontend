@@ -6,6 +6,7 @@ import { Navbar, Jumbotron, SEO, Layout, Card, Footer } from "../components/inde
 import { UserContext } from "../context/UserContext";
 import { useContext, useEffect, useState } from "react";
 import { IDish } from "../types/IDish";
+import { toast } from "react-hot-toast";
 
 const Favourites: NextPage = () => {
   const { user } = useContext(UserContext);
@@ -22,6 +23,7 @@ const Favourites: NextPage = () => {
       }),
     {
       refetchOnMount: true,
+      enabled: user.firstName !== "",
     }
   );
 
@@ -44,7 +46,7 @@ const Favourites: NextPage = () => {
         </p>
       </Jumbotron>
       <Layout>
-        {favDishes === undefined && (
+        {favDishes === undefined && user.firstName === "" && (
           <div className="inline-flex items-center justify-center w-full">
             <div>
               <Image src={"/favfood.png"} alt="Your Favourite food!" width={400} height={400} />
