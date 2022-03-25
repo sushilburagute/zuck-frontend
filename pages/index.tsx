@@ -1,16 +1,13 @@
 import type { NextPage } from "next";
-import Head from "next/head";
 import Image from "next/image";
 import { ArrowRightIcon, ExternalLinkIcon } from "@heroicons/react/outline/";
 import Link from "next/link";
+import { SEO } from "../components";
 
 const Home: NextPage = () => {
   return (
     <>
-      <Head>
-        <title>Zuck | Order Food Online</title>
-        <meta property="og:title" content="Zuck | Order Food Online" key="title" />
-      </Head>
+      <SEO title="Order Food Online" />
       <div className="grid w-full h-screen grid-cols-none md:grid-cols-2">
         <div className="container flex flex-col h-screen px-4 pt-8 mx-auto space-y-16 md:px-16">
           <div className="flex items-center justify-between w-full">

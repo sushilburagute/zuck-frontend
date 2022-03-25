@@ -33,7 +33,7 @@ const Search: NextPage = () => {
 
   return (
     <>
-      <SEO title="Search | Zuck" />
+      <SEO title="Search" />
       <Navbar />
       <div className="block sm:hidden">
         <Jumbotron gradient="bg-white">

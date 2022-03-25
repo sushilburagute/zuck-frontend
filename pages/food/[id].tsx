@@ -77,7 +77,7 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
 
   return (
     <>
-      <SEO title="Food | Zuck" />
+      <SEO title={dish.name} />
       <Navbar />
       <div className="bg-gray-50">
         <main>

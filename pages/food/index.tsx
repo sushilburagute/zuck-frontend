@@ -30,7 +30,7 @@ const Food: NextPage = () => {
 
   return (
     <>
-      <SEO title="Food | Zuck" />
+      <SEO title="Food" />
       <Navbar />
       <Jumbotron gradient="bg-gradient-to-br from-brand-400 to-brand-600">
         <div className="flex justify-between">
