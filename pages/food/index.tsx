@@ -5,6 +5,8 @@ import { Navbar, Layout, Jumbotron, SortBar, Card, SEO, Footer } from "../../com
 import Spinner from "../../components/Spinner/Spinner";
 import { IDish } from "../../types/IDish";
 import { useState, useEffect } from "react";
+import Image from "next/image";
+import { motion } from "framer-motion";
 
 const Food: NextPage = () => {
   const { isLoading, isError, data, error } = useQuery("dishes", () =>
@@ -33,11 +35,19 @@ const Food: NextPage = () => {
       <SEO title="Food" />
       <Navbar />
       <Jumbotron gradient="bg-gradient-to-br from-brand-400 to-brand-600">
-        <div className="flex justify-between">
-          <div className="w-64 h-64 bg-white rounded-md shadow-lg"></div>
-          <div className="w-64 h-64 bg-white rounded-md shadow-lg"></div>
-          <div className="w-64 h-64 bg-white rounded-md shadow-lg"></div>
-          <div className="w-64 h-64 bg-white rounded-md shadow-lg"></div>
+        <div className=" flex justify-center sm:justify-between">
+          <div className="">
+            <Image src="/foodBanner-1.png" alt="Promo Image" height={250} width={250} />
+          </div>
+          <div className=" hidden sm:block">
+            <Image src="/foodBanner-2.png" alt="Promo Image" height={250} width={250} />
+          </div>
+          <div className=" hidden lg:block ">
+            <Image src="/foodBanner-3.png" alt="Promo Image" height={250} width={250} />
+          </div>
+          <div className=" hidden xl:block">
+            <Image src="/foodBanner-4.png" alt="Promo Image" height={250} width={250} />
+          </div>
         </div>
       </Jumbotron>
       <Layout>
