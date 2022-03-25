@@ -7,3 +7,6 @@ export { default as CartCard } from "./CartCard/CartCard";
 export { default as BillCard } from "./BillCard/BillCard";
 export { default as SEO } from "./SEO/SEO";
 export { default as Footer } from "./Footer/Footer";
+export { default as Spinner } from "./Spinner/Spinner";
+export { default as Toast } from "./Toast/Toast";
+export { default as VegIcon } from "./VegIcon/VegIcon";
