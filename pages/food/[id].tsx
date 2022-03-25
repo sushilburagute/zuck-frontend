@@ -140,7 +140,7 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
                   </h2>
 
                   <div className="flex items-center">
-                    <p className="text-lg text-gray-700 sm:text-xl flex items-center">
+                    <p className="flex items-center text-lg text-gray-700 sm:text-xl">
                       <CurrencyRupeeIcon className="w-5 h-5 mr-1" /> {dish.price}
                     </p>
 
@@ -262,7 +262,7 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
 FoodPage.getInitialProps = async (ctx: NextPageContext) => {
   const { id } = ctx.query;
 
-  const res = await axios.get(clsx("http://localhost:5000/api/food/" + id));
+  const res = await axios.get(clsx("https://zuck-backend.up.railway.app/api/food/" + id));
   const dish = await res.data.dishItem[0];
 
   return { dish };

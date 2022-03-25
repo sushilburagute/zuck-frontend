@@ -20,9 +20,9 @@ const Signup: NextPage = () => {
   const router = useRouter();
   const { setUser } = useContext(UserContext);
 
-  const { mutate, isLoading, isSuccess, isError, error } = useMutation(
+  const { mutate, isLoading, isError, error } = useMutation(
     async (data: any) => {
-      return await axios.post("http://localhost:5000/api/auth/sign-up", data);
+      return await axios.post("https://zuck-backend.up.railway.app/api/auth/sign-up", data);
     },
     {
       onSuccess: (data) => {

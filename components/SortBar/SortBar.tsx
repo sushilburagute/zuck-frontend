@@ -1,5 +1,5 @@
 import { Menu, Transition } from "@headlessui/react";
-import { Dispatch, Fragment, SetStateAction, useEffect, useRef, useState } from "react";
+import { Dispatch, Fragment, SetStateAction, useState } from "react";
 import { ChevronDownIcon } from "@heroicons/react/solid";
 import { IDish } from "../../types/IDish";
 import { filterValues, sortValues } from "./values";
@@ -91,13 +91,13 @@ const SortBar = ({ totalDishes = 0, dishData, sortedDishes, setsortedDishes }: I
   return (
     <>
       <div className="z-10 flex items-center justify-between my-8">
-        <div className="items-center inline-flex h-">
-          <h1 className="text-sm sm:text-3xl font-bold text-gray-800">{totalDishes} Dishes</h1>
+        <div className="inline-flex items-center h-">
+          <h1 className="text-sm font-bold text-gray-800 sm:text-3xl">{totalDishes} Dishes</h1>
         </div>
         <div className="flex align-middle">
           {(sortParameters.length !== 0 || valueParameters.length !== 0) && (
             <button
-              className="hidden sm:block mr-4 bg-brand-50 px-4 py-2 rounded-md text-brand-500 text-sm font-medium hover:bg-brand-100 transition-colors"
+              className="hidden px-4 py-2 mr-4 text-sm font-medium transition-colors rounded-md sm:block bg-brand-50 text-brand-500 hover:bg-brand-100"
               onClick={() => {
                 setsortParameters([]);
                 setvalueParameters([]);
@@ -198,10 +198,10 @@ const SortBar = ({ totalDishes = 0, dishData, sortedDishes, setsortedDishes }: I
           </Menu>
         </div>
       </div>
-      <div className="sm:hidden flex justify-end">
+      <div className="flex justify-end sm:hidden">
         {(sortParameters.length !== 0 || valueParameters.length !== 0) && (
           <button
-            className="mr-4 bg-brand-50 px-4 py-2 rounded-md text-brand-500 text-sm font-medium hover:bg-brand-100 transition-colors"
+            className="px-4 py-2 mr-4 text-sm font-medium transition-colors rounded-md bg-brand-50 text-brand-500 hover:bg-brand-100"
             onClick={() => {
               setsortParameters([]);
               setvalueParameters([]);
@@ -212,7 +212,7 @@ const SortBar = ({ totalDishes = 0, dishData, sortedDishes, setsortedDishes }: I
           </button>
         )}
       </div>
-      <hr className="mb-8 mt-4" />
+      <hr className="mt-4 mb-8" />
     </>
   );
 };

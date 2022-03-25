@@ -6,16 +6,15 @@ import { Navbar, Jumbotron, SEO, Layout, Card, Footer } from "../components/inde
 import { UserContext } from "../context/UserContext";
 import { useContext, useEffect, useState } from "react";
 import { IDish } from "../types/IDish";
-import { toast } from "react-hot-toast";
 
 const Favourites: NextPage = () => {
   const { user } = useContext(UserContext);
   const [favDishes, setfavDishes] = useState<IDish[] | undefined>(undefined);
 
-  const { isLoading, isError, data, error } = useQuery(
+  const { isLoading, data } = useQuery(
     "favourites",
     () =>
-      axios("http://localhost:5000/api/user/favourites/", {
+      axios.get("https://zuck-backend.up.railway.app/api/user/favourites/", {
         headers: {
           "Content-type": "Application/json",
           "X-Auth-Token": user.token,

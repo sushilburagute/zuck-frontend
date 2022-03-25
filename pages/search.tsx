@@ -7,13 +7,12 @@ import { SearchIcon } from "@heroicons/react/outline";
 import { ChangeEvent, useState } from "react";
 import { IDish } from "../types/IDish";
 import Image from "next/image";
-import clsx from "clsx";
 
 const Search: NextPage = () => {
   const [searchQuery, setSearchQuery] = useState<String>("");
   const [searchResult, setSearchResult] = useState<[IDish] | [] | null>(null);
   const { isLoading, isError, data, error } = useQuery("dishes", () =>
-    axios("http://localhost:5000/api/food")
+    axios.get("https://zuck-backend.up.railway.app/api/food")
   );
 
   if (isError)
@@ -44,10 +43,10 @@ const Search: NextPage = () => {
       </div>
       <Layout>
         <div className="py-3 sm:py-16 rounded-md flex justify-center bg-gradient-to-r from-[#ffa632] to-[#f76a28]">
-          <form onSubmit={handleSubmit} className="flex w-full md:w-1/2 px-2">
+          <form onSubmit={handleSubmit} className="flex w-full px-2 md:w-1/2">
             <div className="flex w-full">
               <input
-                className=" w-full px-4 py-3 placeholder-white border font-bold border-gray-300 rounded-md bg-white bg-opacity-10 text-sm shadow-sm appearance-none focus:outline-none focus:ring-brand-500 focus:border-brand-500 sm:text-md text-white hover:bg-opacity-20"
+                className="w-full px-4 py-3 text-sm font-bold text-white placeholder-white bg-white border border-gray-300 rounded-md shadow-sm appearance-none bg-opacity-10 focus:outline-none focus:ring-brand-500 focus:border-brand-500 sm:text-md hover:bg-opacity-20"
                 placeholder="Looking for something particular?"
                 id="search-input"
                 onChange={(e: ChangeEvent<HTMLInputElement>) => {
@@ -55,7 +54,7 @@ const Search: NextPage = () => {
                 }}
               />
               <button
-                className=" py-2 px-4 bg-white text-white rounded ml-2 inline-flex font- justify-center items-center bg-opacity-10 focus:ring-brand-500 focus:border-brand-500 hover:bg-opacity-20"
+                className="inline-flex items-center justify-center px-4 py-2 ml-2 text-white bg-white rounded font- bg-opacity-10 focus:ring-brand-500 focus:border-brand-500 hover:bg-opacity-20"
                 type="submit"
               >
                 <SearchIcon className="w-6 h-6 text-white" />
@@ -65,24 +64,24 @@ const Search: NextPage = () => {
         </div>
         <div>
           {!data || isLoading ? (
-            <div className="w-full inline-flex justify-center items-center">
+            <div className="inline-flex items-center justify-center w-full">
               <Spinner />
             </div>
           ) : searchResult === null ? (
-            <div className="w-full inline-flex justify-center items-center">
+            <div className="inline-flex items-center justify-center w-full">
               <div>
                 <Image src={"/search.png"} alt="Man searching for items" width={400} height={400} />
               </div>
             </div>
           ) : searchResult.length === 0 ? (
-            <div className="w-full inline-flex justify-center items-center">
+            <div className="inline-flex items-center justify-center w-full">
               <div>
                 <Image src={"/empty.png"} alt="No Items found" width={400} height={400} />
                 <p className="text-center text-gray-600">Sorry, we don&apos;t serve that item</p>
               </div>
             </div>
           ) : (
-            <div className="grid grid-cols-1 gap-8 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 mt-4">
+            <div className="grid grid-cols-1 gap-8 mt-4 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2">
               {searchResult.map((dish: IDish) => {
                 return (
                   <Card

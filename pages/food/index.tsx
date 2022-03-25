@@ -8,7 +8,7 @@ import { useState, useEffect } from "react";
 
 const Food: NextPage = () => {
   const { isLoading, isError, data, error } = useQuery("dishes", () =>
-    axios("http://localhost:5000/api/food")
+    axios("https://zuck-backend.up.railway.app/api/food")
   );
 
   const [dishData, setdishData] = useState<IDish[] | undefined>(undefined);
