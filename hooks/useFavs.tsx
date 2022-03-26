@@ -12,7 +12,7 @@ export default function useFavs(_id?: string) {
   const { isLoading: isFavLoading, data: favData } = useQuery(
     "favourites",
     () =>
-      axios.get("https://zuck-backend.up.railway.app/api/user/favourites/", {
+      axios.get("http://localhost:5000/api/user/favourites/", {
         headers: {
           "Content-type": "Application/json",
           "X-Auth-Token": user.token,
@@ -31,10 +31,9 @@ export default function useFavs(_id?: string) {
     }
   }, [favData, isFavLoading, _id]);
 
-  // TODO:  better error handling
   const { mutate } = useMutation(
     async (data: any) => {
-      return await axios.post("https://zuck-backend.up.railway.app/api/user/favourites/", data, {
+      return await axios.post("http://localhost:5000/api/user/favourites/", data, {
         headers: {
           "Content-type": "Application/json",
           "X-Auth-Token": user.token,

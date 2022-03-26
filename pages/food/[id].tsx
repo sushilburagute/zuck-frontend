@@ -17,8 +17,10 @@ import Image from "next/image";
 import { IDish } from "./../../types/IDish";
 import useFavs from "./../../hooks/useFavs";
 import useCart from "./../../hooks/useCart";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { ICart } from "../../types/ICart";
+import { UserContext } from "../../context/UserContext";
+import toast from "react-hot-toast";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -29,6 +31,7 @@ interface IProps {
 }
 
 const FoodPage: NextPage<IProps> = ({ dish }) => {
+  const { user } = useContext(UserContext);
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
   const [cartQuantity, setCartQuantity] = useState<number>(0);
   const [inCart, setInCart] = useState<boolean>(false);
@@ -45,28 +48,44 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
   }, [isCartLoading, cartData, dish._id]);
 
   function handleFav() {
-    favMutate({ _id: dish._id, type: isFav ? "REMOVE_FROM_FAVOURITES" : "ADD_TO_FAVOURITES" });
+    user.token !== ""
+      ? favMutate({ _id: dish._id, type: isFav ? "REMOVE_FROM_FAVOURITES" : "ADD_TO_FAVOURITES" })
+      : toast.error("You need to be signed in to do that");
   }
 
   function handleAddToCart() {
-    cartMutate({ _id: dish._id, type: "ADD_TO_CART", quantity: 1 });
+    user.token !== ""
+      ? cartMutate({ _id: dish._id, type: "ADD_TO_CART", quantity: 1 })
+      : toast.error("You need to be signed in to do that");
   }
   function handleDeletefromCart() {
-    cartMutate({ _id: dish._id, type: "REMOVE_FROM_CART", quantity: cartQuantity });
-    setInCart(false);
+    if (user.token !== "") {
+      cartMutate({ _id: dish._id, type: "REMOVE_FROM_CART", quantity: cartQuantity });
+      setInCart(false);
+    } else {
+      toast.error("You need to be signed in to do that");
+    }
   }
 
   function handleAddQuantityToCart() {
-    cartMutate({ _id: dish._id, type: "ADD_QUANTITY_IN_CART", quantity: cartQuantity });
-    setCartQuantity(cartQuantity + 1);
-    setIsButtonDisabled(false);
+    if (user.token !== "") {
+      cartMutate({ _id: dish._id, type: "ADD_QUANTITY_IN_CART", quantity: cartQuantity });
+      setCartQuantity(cartQuantity + 1);
+      setIsButtonDisabled(false);
+    } else {
+      toast.error("You need to be signed in to do that");
+    }
   }
   function handleSubtractQuantityCart() {
-    if (cartQuantity !== 1) {
-      cartMutate({ _id: dish._id, type: "SUBTRACT_QUANTITY_IN_CART", quantity: cartQuantity });
-      setCartQuantity(cartQuantity - 1);
+    if (user.token !== "") {
+      if (cartQuantity !== 1) {
+        cartMutate({ _id: dish._id, type: "SUBTRACT_QUANTITY_IN_CART", quantity: cartQuantity });
+        setCartQuantity(cartQuantity - 1);
+      } else {
+        setIsButtonDisabled(true);
+      }
     } else {
-      setIsButtonDisabled(true);
+      toast.error("You need to be signed in to do that");
     }
   }
 
@@ -262,7 +281,7 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
 FoodPage.getInitialProps = async (ctx: NextPageContext) => {
   const { id } = ctx.query;
 
-  const res = await axios.get(clsx("https://zuck-backend.up.railway.app/api/food/" + id));
+  const res = await axios.get(clsx("http://localhost:5000/api/food/" + id));
   const dish = await res.data.dishItem[0];
 
   return { dish };

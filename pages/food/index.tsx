@@ -10,7 +10,7 @@ import { motion } from "framer-motion";
 
 const Food: NextPage = () => {
   const { isLoading, isError, data, error } = useQuery("dishes", () =>
-    axios("https://zuck-backend.up.railway.app/api/food")
+    axios("http://localhost:5000/api/food")
   );
 
   const [dishData, setdishData] = useState<IDish[] | undefined>(undefined);

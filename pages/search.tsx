@@ -12,7 +12,7 @@ const Search: NextPage = () => {
   const [searchQuery, setSearchQuery] = useState<String>("");
   const [searchResult, setSearchResult] = useState<[IDish] | [] | null>(null);
   const { isLoading, isError, data, error } = useQuery("dishes", () =>
-    axios.get("https://zuck-backend.up.railway.app/api/food")
+    axios.get("http://localhost:5000/api/food")
   );
 
   if (isError)

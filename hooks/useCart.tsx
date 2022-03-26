@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import toast from "react-hot-toast";
 import { useMutation, useQuery } from "react-query";
 import { UserContext } from "../context/UserContext";
@@ -14,7 +14,7 @@ export default function useCart(_id?: string) {
   } = useQuery(
     "cart",
     () =>
-      axios.get("https://zuck-backend.up.railway.app/api/user/cart/", {
+      axios.get("http://localhost:5000/api/user/cart/", {
         headers: {
           "Content-type": "Application/json",
           "X-Auth-Token": user.token,
@@ -26,11 +26,9 @@ export default function useCart(_id?: string) {
     }
   );
 
-  // TODO:  better error handling
-
   const { mutate } = useMutation(
     async (data: any) => {
-      return await axios.post("https://zuck-backend.up.railway.app/api/user/cart/", data, {
+      return await axios.post("http://localhost:5000/api/user/cart/", data, {
         headers: {
           "Content-type": "Application/json",
           "X-Auth-Token": user.token,

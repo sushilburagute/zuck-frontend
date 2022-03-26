@@ -14,7 +14,7 @@ const Favourites: NextPage = () => {
   const { isLoading, data } = useQuery(
     "favourites",
     () =>
-      axios.get("https://zuck-backend.up.railway.app/api/user/favourites/", {
+      axios.get("http://localhost:5000/api/user/favourites/", {
         headers: {
           "Content-type": "Application/json",
           "X-Auth-Token": user.token,
@@ -25,8 +25,6 @@ const Favourites: NextPage = () => {
       enabled: user.firstName !== "",
     }
   );
-
-  // TODO: Error Handling
 
   useEffect(() => {
     if (!isLoading) {
