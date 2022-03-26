@@ -12,6 +12,12 @@ import clsx from "clsx";
 
 import useFavs from "./../../hooks/useFavs";
 import VegIcon from "../VegIcon/VegIcon";
+import { UserContext } from "./../../context/UserContext";
+import { useContext } from "react";
+
+import toast from "react-hot-toast";
+import { motion } from "framer-motion";
+import { fadeInUp } from "../../animation/fadeInUp";
 
 export interface ICard {
   name: string;
@@ -26,10 +32,13 @@ export interface ICard {
 }
 
 const Card = ({ _id, name, type, rating, deliveryTime, imageSrc, price, discount, veg }: ICard) => {
+  const { user } = useContext(UserContext);
   const { mutate, isFav } = useFavs(_id);
 
   function handleClick() {
-    mutate({ _id: _id, type: isFav ? "REMOVE_FROM_FAVOURITES" : "ADD_TO_FAVOURITES" });
+    user.token !== ""
+      ? mutate({ _id: _id, type: isFav ? "REMOVE_FROM_FAVOURITES" : "ADD_TO_FAVOURITES" })
+      : toast.error("You need to be signed in to do that");
   }
 
   function ratingColor(rating: number): string {
@@ -58,7 +67,11 @@ const Card = ({ _id, name, type, rating, deliveryTime, imageSrc, price, discount
 
   return (
     <>
-      <div className="p-4 border-2 border-gray-100 hover:border-gray-200">
+      <motion.div
+        variants={fadeInUp}
+        layout
+        className="p-4 border-2 border-gray-100 hover:border-gray-200 rounded-lg shadow-none hover:shadow-sm"
+      >
         <div className="relative w-full h-40 bg-gray-300 rounded-sm">
           <Image src={imageSrc} alt={name} layout="fill" objectFit="cover" />
 
@@ -76,7 +89,7 @@ const Card = ({ _id, name, type, rating, deliveryTime, imageSrc, price, discount
         <div className="mt-4 space-y-3">
           <div className="flex justify-between item-center">
             <h1 className="text-2xl font-medium text-gray-800 ">{name}</h1>
-            <VegIcon isVeg={veg}/>
+            <VegIcon isVeg={veg} />
           </div>
           <div className="flex justify-between">
             <h3 className="text-sm font-light text-gray-600 ">{foodType(type)}</h3>
@@ -112,7 +125,7 @@ const Card = ({ _id, name, type, rating, deliveryTime, imageSrc, price, discount
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

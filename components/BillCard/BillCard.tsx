@@ -3,6 +3,8 @@ import { useState } from "react";
 import { CreditCardIcon, CurrencyRupeeIcon } from "@heroicons/react/outline";
 import { AxiosResponse } from "axios";
 import Spinner from "../Spinner/Spinner";
+import { motion } from "framer-motion";
+import { fadeInUp } from "../../animation/fadeInUp";
 
 interface IProps {
   isCartLoading: boolean;
@@ -40,7 +42,10 @@ const BillCard = ({ isCartLoading, cartData }: IProps) => {
 
   return (
     <>
-      <div className="p-4 space-y-4 border-2 border-gray-100 rounded-md hover:border-gray-200 ">
+      <motion.div
+        variants={fadeInUp}
+        className="p-4 space-y-4 border-2 border-gray-100 rounded-md hover:border-gray-200 "
+      >
         <div>
           <h1 className="text-2xl font-bold text-gray-800 ">Bill Details</h1>
         </div>
@@ -95,11 +100,11 @@ const BillCard = ({ isCartLoading, cartData }: IProps) => {
             {(findTotal() + deliveryCharge).toString()}
           </h3>
         </div>
-      </div>
-      <button className="flex items-center justify-center w-full p-2 text-lg font-medium text-white transition duration-300 rounded bg-brand-500 hover:bg-brand-700 hover:shadow-md">
+      </motion.div>
+      <motion.button variants={fadeInUp} className="flex items-center justify-center w-full p-2 text-lg font-medium text-white transition duration-300 rounded bg-brand-500 hover:bg-brand-700 hover:shadow-md">
         <CreditCardIcon className="w-5 h-5 mr-2" />
         Checkout
-      </button>
+      </motion.button>
     </>
   );
 };

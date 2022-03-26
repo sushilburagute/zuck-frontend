@@ -12,6 +12,9 @@ import { useContext } from "react";
 import Spinner from "../../components/Spinner/Spinner";
 import { UserContext } from "../../context/UserContext";
 import { SEO } from "../../components";
+import { motion } from "framer-motion";
+import { stagger } from "./../../animation/stagger";
+import { fadeInUp } from "../../animation/fadeInUp";
 
 const errorNotify = (error: any) => toast.error(`Error: ${error}`);
 
@@ -44,7 +47,12 @@ const Signup: NextPage = () => {
     <>
       <SEO title="Signup" />
 
-      <div className="flex min-h-screen bg-white">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="flex min-h-screen bg-white"
+      >
         <div className="flex flex-col justify-center flex-1 px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
           <div className="w-full max-w-sm mx-auto lg:w-96">
             <div>
@@ -64,10 +72,16 @@ const Signup: NextPage = () => {
               </p>
             </div>
 
-            <div className="mt-8">
+            <motion.div
+              variants={stagger}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              className="mt-8"
+            >
               <div className="mt-6">
                 <form action="#" method="POST" className="space-y-6" onSubmit={onSubmit}>
-                  <div className="space-y-1">
+                  <motion.div variants={fadeInUp} className="space-y-1">
                     <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                       First Name
                     </label>
@@ -81,8 +95,9 @@ const Signup: NextPage = () => {
                         {...register("firstName", { required: true, maxLength: 20 })}
                       />
                     </div>
-                  </div>
-                  <div className="space-y-1">
+                  </motion.div>
+
+                  <motion.div variants={fadeInUp} className="space-y-1">
                     <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                       Last Name
                     </label>
@@ -95,8 +110,9 @@ const Signup: NextPage = () => {
                         {...register("lastName", { required: true, maxLength: 20 })}
                       />
                     </div>
-                  </div>
-                  <div>
+                  </motion.div>
+
+                  <motion.div variants={fadeInUp}>
                     <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                       Email address
                     </label>
@@ -114,9 +130,9 @@ const Signup: NextPage = () => {
                         className="block w-full px-3 py-2 placeholder-gray-400 border border-gray-300 rounded-md shadow-sm appearance-none focus:outline-none focus:ring-brand-500 focus:border-brand-500 sm:text-sm"
                       />
                     </div>
-                  </div>
+                  </motion.div>
 
-                  <div className="space-y-1">
+                  <motion.div variants={fadeInUp} className="space-y-1">
                     <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                       Create a Password
                     </label>
@@ -134,20 +150,20 @@ const Signup: NextPage = () => {
                       The password needs to have a capital letter, a number, a special character,
                       and should be 8 characters long.
                     </p>
-                  </div>
+                  </motion.div>
 
-                  <div>
+                  <motion.div variants={fadeInUp}>
                     <button
                       type="submit"
                       className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500"
                     >
                       {isLoading ? <Spinner textColor="text-white" /> : "Create a new account"}
                     </button>
-                  </div>
+                  </motion.div>
                 </form>
                 {isError && errorNotify(error)}
               </div>
-            </div>
+            </motion.div>
           </div>
         </div>
         <div className="relative flex-1 hidden w-0 lg:block">
@@ -159,7 +175,7 @@ const Signup: NextPage = () => {
             src="https://images.unsplash.com/photo-1610614991969-ceeb293e7ff5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"
           />
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

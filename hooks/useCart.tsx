@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useContext, useEffect, useState } from "react";
+import { useContext } from "react";
 import toast from "react-hot-toast";
 import { useMutation, useQuery } from "react-query";
 import { UserContext } from "../context/UserContext";
@@ -25,8 +25,6 @@ export default function useCart(_id?: string) {
       enabled: user.token !== "",
     }
   );
-
-  // TODO:  better error handling
 
   const { mutate } = useMutation(
     async (data: any) => {

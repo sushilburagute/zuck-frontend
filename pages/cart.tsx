@@ -5,6 +5,9 @@ import { ICart } from "../types/ICart";
 import { UserContext } from "./../context/UserContext";
 import { useContext } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
+import { fadeInUp } from "../animation/fadeInUp";
+import { stagger } from "./../animation/stagger";
 
 const Cart: NextPage = () => {
   const { user } = useContext(UserContext);
@@ -18,10 +21,20 @@ const Cart: NextPage = () => {
         <h1 className="text-3xl font-bold text-gray-800">Cart</h1>
         <p className="mt-2 text-gray-600">Ready for your order to be delivered to you?</p>
 
-        <div className="grid grid-cols-1 gap-4 md:grid-cols-3 w-full mt-8">
+        <motion.div
+          variants={stagger}
+          initial="initial"
+          animate="animate"
+          exit="exit"
+          layout
+          className="grid grid-cols-1 gap-4 md:grid-cols-3 w-full mt-8"
+        >
           <div className="col-span-1 md:col-span-2 space-y-2 w-full">
             {user.firstName === "" && (
-              <div className="inline-flex items-center justify-center w-full">
+              <motion.div
+                variants={fadeInUp}
+                className="inline-flex items-center justify-center w-full"
+              >
                 <div>
                   <Image
                     src={"/addtocart.png"}
@@ -33,7 +46,7 @@ const Cart: NextPage = () => {
                     The items you add to the Cart will show up here!
                   </p>
                 </div>
-              </div>
+              </motion.div>
             )}
             {isCartLoading ? (
               <Spinner />
@@ -60,7 +73,7 @@ const Cart: NextPage = () => {
           <div className="col-span-1 space-y-5 w-full">
             <BillCard isCartLoading={isCartLoading} cartData={cartData} />
           </div>
-        </div>
+        </motion.div>
       </Jumbotron>
       <Footer />
     </>

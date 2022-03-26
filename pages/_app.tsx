@@ -5,6 +5,7 @@ import { ReactQueryDevtools } from "react-query/devtools";
 import Toast from "../components/Toast/Toast";
 import { UserContext } from "../context/UserContext";
 import { useState, useMemo, useEffect } from "react";
+import { AnimatePresence } from "framer-motion";
 
 const queryClient = new QueryClient();
 
@@ -26,9 +27,11 @@ function MyApp({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <UserContext.Provider value={value}>
-        <Toast />
-        <Component {...pageProps} />
-        <ReactQueryDevtools initialIsOpen={false} />
+        <AnimatePresence exitBeforeEnter>
+          <Toast />
+          <Component {...pageProps} />
+          <ReactQueryDevtools initialIsOpen={false} />
+        </AnimatePresence>
       </UserContext.Provider>
     </QueryClientProvider>
   );

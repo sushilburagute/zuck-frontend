@@ -6,6 +6,9 @@ import { Navbar, Jumbotron, SEO, Layout, Card, Footer } from "../components/inde
 import { UserContext } from "../context/UserContext";
 import { useContext, useEffect, useState } from "react";
 import { IDish } from "../types/IDish";
+import { motion } from "framer-motion";
+import { stagger } from "./../animation/stagger";
+import { fadeInUp } from "../animation/fadeInUp";
 
 const Favourites: NextPage = () => {
   const { user } = useContext(UserContext);
@@ -26,8 +29,6 @@ const Favourites: NextPage = () => {
     }
   );
 
-  // TODO: Error Handling
-
   useEffect(() => {
     if (!isLoading) {
       setfavDishes(data?.data.foodFavourites);
@@ -45,34 +46,46 @@ const Favourites: NextPage = () => {
         </p>
       </Jumbotron>
       <Layout>
-        {favDishes === undefined && user.firstName === "" && (
-          <div className="inline-flex items-center justify-center w-full">
-            <div>
-              <Image src={"/favfood.png"} alt="Your Favourite food!" width={400} height={400} />
-              <p className="text-center text-gray-600">Items you heart will show up here</p>
-            </div>
-          </div>
-        )}
-        {favDishes !== undefined && favDishes?.length > 0 && (
-          <div className="grid grid-cols-1 gap-4 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2">
-            {favDishes.map((dish: IDish) => {
-              return (
-                <Card
-                  _id={dish._id}
-                  name={dish.name}
-                  imageSrc={dish.image}
-                  type={dish.type}
-                  rating={dish.rating}
-                  deliveryTime={dish.deliveryTime}
-                  price={dish.price}
-                  veg={dish.veg}
-                  discount={dish.discount}
-                  key={dish._id}
-                />
-              );
-            })}
-          </div>
-        )}
+        <motion.div variants={stagger} initial="initial" animate="animate" exit="exit">
+          {favDishes === undefined && user.firstName === "" && (
+            <motion.div
+              variants={fadeInUp}
+              className="inline-flex items-center justify-center w-full"
+            >
+              <div>
+                <Image src={"/favfood.png"} alt="Your Favourite food!" width={400} height={400} />
+                <p className="text-center text-gray-600">Items you heart will show up here</p>
+              </div>
+            </motion.div>
+          )}
+          {favDishes !== undefined && favDishes?.length > 0 && (
+            <motion.div
+              variants={stagger}
+              initial="initial"
+              animate="animate"
+              exit="exit"
+              layout
+              className="grid grid-cols-1 gap-4 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2"
+            >
+              {favDishes.map((dish: IDish) => {
+                return (
+                  <Card
+                    _id={dish._id}
+                    name={dish.name}
+                    imageSrc={dish.image}
+                    type={dish.type}
+                    rating={dish.rating}
+                    deliveryTime={dish.deliveryTime}
+                    price={dish.price}
+                    veg={dish.veg}
+                    discount={dish.discount}
+                    key={dish._id}
+                  />
+                );
+              })}
+            </motion.div>
+          )}
+        </motion.div>
       </Layout>
       <Footer />
     </>

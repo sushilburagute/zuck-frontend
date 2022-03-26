@@ -1,7 +1,5 @@
 import Head from "next/head";
 
-// TODO: Add more meta tags
-
 interface IProps {
   title: string;
 }

@@ -31,7 +31,6 @@ export default function useFavs(_id?: string) {
     }
   }, [favData, isFavLoading, _id]);
 
-  // TODO:  better error handling
   const { mutate } = useMutation(
     async (data: any) => {
       return await axios.post("https://zuck-backend.up.railway.app/api/user/favourites/", data, {
