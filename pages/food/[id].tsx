@@ -21,6 +21,9 @@ import { useContext, useEffect, useState } from "react";
 import { ICart } from "../../types/ICart";
 import { UserContext } from "../../context/UserContext";
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
+import { fadeInUp } from "../../animation/fadeInUp";
+import { stagger } from "./../../animation/stagger";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -98,7 +101,13 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
     <>
       <SEO title={dish.name} />
       <Navbar />
-      <div className="bg-gray-50">
+      <motion.div
+        className="bg-gray-50"
+        variants={stagger}
+        initial="initial"
+        animate="animate"
+        exit="exit"
+      >
         <main>
           <div className="bg-white">
             <div className="max-w-2xl px-8 pt-8 pb-24 mx-auto lg:pt-12 sm:pt-12 sm:pb-24 sm:px-6 lg:max-w-7xl lg:px-8 lg:grid lg:grid-cols-2 lg:gap-x-8">
@@ -132,7 +141,10 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
                   </ol>
                 </nav>
 
-                <div className="inline-flex items-center justify-between w-full mt-4">
+                <motion.div
+                  variants={fadeInUp}
+                  className="inline-flex items-center justify-between w-full mt-4"
+                >
                   <div className="inline-flex items-center">
                     <VegIcon isVeg={dish.veg} />
                     <h1 className="ml-5 text-3xl font-extrabold tracking-tight text-gray-900 sm:text-4xl">
@@ -151,7 +163,7 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
                       <HeartIconOutline className="w-5 h-5 text-red-500" />
                     )}
                   </div>
-                </div>
+                </motion.div>
 
                 <section aria-labelledby="information-heading" className="mt-4">
                   <h2 id="information-heading" className="sr-only">
@@ -159,11 +171,14 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
                   </h2>
 
                   <div className="flex items-center">
-                    <p className="flex items-center text-lg text-gray-700 sm:text-xl">
+                    <motion.p
+                      variants={fadeInUp}
+                      className="flex items-center text-lg text-gray-700 sm:text-xl"
+                    >
                       <CurrencyRupeeIcon className="w-5 h-5 mr-1" /> {dish.price}
-                    </p>
+                    </motion.p>
 
-                    <div className="pl-4 ml-4 border-l border-gray-300">
+                    <motion.div variants={fadeInUp} className="pl-4 ml-4 border-l border-gray-300">
                       <h2 className="sr-only">Reviews</h2>
                       <div className="flex items-center">
                         <div>
@@ -185,21 +200,21 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
                         </div>
                         <p className="ml-2 text-sm text-gray-500">{dish.rating} rating</p>
                       </div>
-                    </div>
+                    </motion.div>
                   </div>
 
-                  <div className="mt-4 space-y-6">
+                  <motion.div variants={fadeInUp} className="mt-4 space-y-6">
                     <p className="text-base text-gray-500">{dish.description}</p>
-                  </div>
+                  </motion.div>
 
-                  <div className="flex items-center mt-6">
+                  <motion.div variants={fadeInUp} className="flex items-center mt-6">
                     <CheckIcon
                       className="flex-shrink-0 w-5 h-5 text-green-500"
                       aria-hidden="true"
                     />
                     <p className="ml-2 text-sm text-gray-500">In stock and ready to ship</p>
-                  </div>
-                  <div className="mt-10">
+                  </motion.div>
+                  <motion.div variants={fadeInUp} className="mt-10">
                     {inCart ? (
                       <>
                         <div className="inline-flex justify-between w-full">
@@ -242,19 +257,25 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
                         Add to cart
                       </button>
                     )}
-                  </div>
+                  </motion.div>
                 </section>
               </div>
 
               {/* Product image */}
               <div className="mt-10 lg:mt-0 lg:col-start-2 lg:row-span-2 lg:self-center">
-                <div className="overflow-hidden rounded-lg aspect-w-1 aspect-h-1">
+                <motion.div
+                  variants={fadeInUp}
+                  className="overflow-hidden rounded-lg aspect-w-1 aspect-h-1"
+                >
                   <Image src={dish.image} alt={dish.name} layout="fill" objectFit="cover" />
-                </div>
+                </motion.div>
               </div>
 
               {/* Product form */}
-              <div className="mt-10 lg:max-w-lg lg:col-start-1 lg:row-start-2 lg:self-start">
+              <motion.div
+                variants={fadeInUp}
+                className="mt-10 lg:max-w-lg lg:col-start-1 lg:row-start-2 lg:self-start"
+              >
                 <section aria-labelledby="options-heading">
                   <div className="mt-6 text-center">
                     <a href="#" className="inline-flex text-base font-medium group">
@@ -268,12 +289,12 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
                     </a>
                   </div>
                 </section>
-              </div>
+              </motion.div>
             </div>
           </div>
         </main>
         <Footer />
-      </div>
+      </motion.div>
     </>
   );
 };
@@ -281,7 +302,7 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
 FoodPage.getInitialProps = async (ctx: NextPageContext) => {
   const { id } = ctx.query;
 
-  const res = await axios.get(clsx("http://localhost:5000/api/food/" + id));
+  const res = await axios.get(clsx("https://zuck-backend.up.railway.app/api/food/" + id));
   const dish = await res.data.dishItem[0];
 
   return { dish };

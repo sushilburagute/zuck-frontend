@@ -16,6 +16,8 @@ import { UserContext } from "./../../context/UserContext";
 import { useContext } from "react";
 
 import toast from "react-hot-toast";
+import { motion } from "framer-motion";
+import { fadeInUp } from "../../animation/fadeInUp";
 
 export interface ICard {
   name: string;
@@ -65,7 +67,11 @@ const Card = ({ _id, name, type, rating, deliveryTime, imageSrc, price, discount
 
   return (
     <>
-      <div className="p-4 border-2 border-gray-100 hover:border-gray-200">
+      <motion.div
+        variants={fadeInUp}
+        layout
+        className="p-4 border-2 border-gray-100 hover:border-gray-200 rounded-lg shadow-none hover:shadow-sm"
+      >
         <div className="relative w-full h-40 bg-gray-300 rounded-sm">
           <Image src={imageSrc} alt={name} layout="fill" objectFit="cover" />
 
@@ -119,7 +125,7 @@ const Card = ({ _id, name, type, rating, deliveryTime, imageSrc, price, discount
             </Link>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

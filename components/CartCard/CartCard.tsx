@@ -5,6 +5,7 @@ import {
   TrashIcon,
   CurrencyRupeeIcon,
   TicketIcon,
+  ExternalLinkIcon,
 } from "@heroicons/react/outline";
 import { HeartIcon as HeartIconSolid, StarIcon } from "@heroicons/react/solid";
 import VegIcon from "../VegIcon/VegIcon";
@@ -14,6 +15,9 @@ import Image from "next/image";
 import useFavs from "./../../hooks/useFavs";
 import useCart from "./../../hooks/useCart";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
+import { fadeInUp } from "../../animation/fadeInUp";
+import Link from "next/link";
 
 interface IProps {
   cartItem: ICart;
@@ -88,7 +92,10 @@ const CartCard = ({ cartItem }: IProps) => {
   }
   return (
     <>
-      <div className=" flex p-4 space-x-0 lg:space-x-8 border-2 border-gray-100 rounded-md hover:border-gray-300 w-full">
+      <motion.div
+        variants={fadeInUp}
+        className=" flex p-4 space-x-0 lg:space-x-8 border-2 border-gray-100 rounded-md hover:border-gray-300 w-full"
+      >
         <div className="hidden lg:flex">
           <div className=" relative bg-gray-300 rounded-sm h-48 w-48">
             <Image
@@ -114,9 +121,12 @@ const CartCard = ({ cartItem }: IProps) => {
             <div>
               <div className="inline-flex items-center">
                 <VegIcon isVeg={true} />
-                <h1 className="text-lg font-bold text-gray-800 sm:text-2xl ml-3 ">
-                  {cartItem._id.name}
-                </h1>
+                <Link href={`/food/${cartItem._id._id}`}>
+                  <a className="text-lg font-bold text-gray-800 sm:text-2xl ml-3 cursor-pointer inline-flex items-center">
+                    {cartItem._id.name}
+                    <ExternalLinkIcon className="w-4 h-4 sm:w-5 sm:h-5 ml-3" />
+                  </a>
+                </Link>
               </div>
               <div className="flex mt-4 items-center">
                 <div
@@ -183,7 +193,7 @@ const CartCard = ({ cartItem }: IProps) => {
             </div>
           </div>
         </div>
-      </div>
+      </motion.div>
     </>
   );
 };

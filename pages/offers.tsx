@@ -1,6 +1,9 @@
 import { NextPage } from "next";
 import { Navbar, Footer, Layout, Jumbotron, SEO } from "../components/index";
 import clsx from "clsx";
+import { stagger } from "./../animation/stagger";
+import { motion } from "framer-motion";
+import { fadeInUp } from "../animation/fadeInUp";
 
 const Offers: NextPage = () => {
   const offers = [
@@ -40,18 +43,23 @@ const Offers: NextPage = () => {
         <p className="mt-1 text-gray-600 ">We got you covered.</p>
       </Jumbotron>
       <Layout>
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 mt-8">
+        <motion.div
+          variants={stagger}
+          initial="initial" animate="animate" exit="exit"
+          className="grid grid-cols-1 gap-8 lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 mt-8"
+        >
           {offers.map(({ heading, code, subheading, gradient }) => (
-            <div
+            <motion.div
+              variants={fadeInUp}
               className={clsx("p-4 bg-gradient-to-br text-white rounded-lg shadow-md", gradient)}
               key={heading}
             >
               <h1 className="text-4xl font-bold text-white">{heading}</h1>
               <p className="mt-2 font-bold text-white">{code}</p>
               <p className="mt-6">{subheading}</p>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </Layout>
       <Footer />
     </>

@@ -7,12 +7,15 @@ import { SearchIcon } from "@heroicons/react/outline";
 import { ChangeEvent, useState } from "react";
 import { IDish } from "../types/IDish";
 import Image from "next/image";
+import { stagger } from "./../animation/stagger";
+import { motion } from "framer-motion";
+import { fadeInUp } from "../animation/fadeInUp";
 
 const Search: NextPage = () => {
   const [searchQuery, setSearchQuery] = useState<String>("");
   const [searchResult, setSearchResult] = useState<[IDish] | [] | null>(null);
   const { isLoading, isError, data, error } = useQuery("dishes", () =>
-    axios.get("http://localhost:5000/api/food")
+    axios.get("https://zuck-backend.up.railway.app/api/food")
   );
 
   if (isError)
@@ -62,17 +65,20 @@ const Search: NextPage = () => {
             </div>
           </form>
         </div>
-        <div>
+        <motion.div variants={stagger} initial="initial" animate="animate" exit="exit">
           {!data || isLoading ? (
             <div className="inline-flex items-center justify-center w-full">
               <Spinner />
             </div>
           ) : searchResult === null ? (
-            <div className="inline-flex items-center justify-center w-full">
+            <motion.div
+              variants={fadeInUp}
+              className="inline-flex items-center justify-center w-full"
+            >
               <div>
                 <Image src={"/search.png"} alt="Man searching for items" width={400} height={400} />
               </div>
-            </div>
+            </motion.div>
           ) : searchResult.length === 0 ? (
             <div className="inline-flex items-center justify-center w-full">
               <div>
@@ -100,7 +106,7 @@ const Search: NextPage = () => {
               })}
             </div>
           )}
-        </div>
+        </motion.div>
       </Layout>
       <Footer />
     </>
