@@ -14,7 +14,7 @@ interface IProps {
 const BillCard = ({ isCartLoading, cartData }: IProps) => {
   const deliveryCharge = 63;
   function findGST() {
-    return findTotal() * 0.05;
+    return Math.round(findTotal() * 0.05);
   }
 
   function findTotal(): number {
@@ -101,7 +101,10 @@ const BillCard = ({ isCartLoading, cartData }: IProps) => {
           </h3>
         </div>
       </motion.div>
-      <motion.button variants={fadeInUp} className="flex items-center justify-center w-full p-2 text-lg font-medium text-white transition duration-300 rounded bg-brand-500 hover:bg-brand-700 hover:shadow-md">
+      <motion.button
+        variants={fadeInUp}
+        className="flex items-center justify-center w-full p-2 text-lg font-medium text-white transition duration-300 rounded bg-brand-500 hover:bg-brand-700 hover:shadow-md"
+      >
         <CreditCardIcon className="w-5 h-5 mr-2" />
         Checkout
       </motion.button>
