@@ -161,7 +161,7 @@ const Signup: NextPage = () => {
                     </button>
                   </motion.div>
                 </form>
-                {isError && errorNotify(error)}
+                {isError ? errorNotify(error) : null}
               </div>
             </motion.div>
           </div>

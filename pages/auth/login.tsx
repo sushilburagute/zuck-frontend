@@ -137,9 +137,17 @@ const Login: NextPage = () => {
                     >
                       {isLoading ? <Spinner textColor="text-white" /> : "Sign in"}
                     </button>
+                    <button
+                      onClick={() => {
+                        mutate({ email: "johndoe@gmail.com", password: "Test12345!" });
+                      }}
+                      className="flex mt-4 justify-center w-full px-4 py-2 text-sm font-medium text-brand-600 border border-brand-600 rounded-md shadow-sm bg-white hover:bg-brand-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500"
+                    >
+                      {isLoading ? <Spinner textColor="text-white" /> : "Guest Login"}
+                    </button>
                   </motion.div>
                 </form>
-                {isError && errorNotify(`We couldn't locate a user with those credintials.`)}
+                {isError ? errorNotify(`We couldn't locate a user with those credintials.`) : null}
               </div>
             </motion.div>
           </div>

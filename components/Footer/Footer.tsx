@@ -15,10 +15,10 @@ const Footer = () => {
             <Link href="/food">
               <a className="my-3 block text-gray-600">Food Items</a>
             </Link>
-            <Link href="/#">
+            <Link href="/offers">
               <a className="my-3 block text-gray-600">Offers</a>
             </Link>
-            <Link href="/#">
+            <Link href="/favourites">
               <a className="my-3 block text-gray-600">Favourites</a>
             </Link>
           </div>
