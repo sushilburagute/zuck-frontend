@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useContext } from "react";
 
@@ -15,6 +14,7 @@ import { SEO } from "../../components";
 import { motion } from "framer-motion";
 import { stagger } from "../../animation/stagger";
 import { fadeInUp } from "../../animation/fadeInUp";
+import { loginUser } from "../../lib/localData";
 
 const errorNotify = (error: any) => toast.error(`Error: ${error}`);
 
@@ -25,13 +25,13 @@ const Login: NextPage = () => {
 
   const { mutate, isPending, isError } = useMutation({
     mutationFn: async (data: any) => {
-      return await axios.post("https://zuck-backend.up.railway.app/api/auth/sign-in", data);
+      return await loginUser(data);
     },
     onSuccess: (data) => {
-      if (data.data?.msg === "Logged in successfully !") {
-        localStorage.setItem("token", JSON.stringify(data.data?.token));
-        localStorage.setItem("firstName", JSON.stringify(data.data?.firstName));
-        setUser({ firstName: data.data?.firstName, token: data.data?.token });
+      if (data.msg === "Logged in successfully !") {
+        localStorage.setItem("token", JSON.stringify(data.token));
+        localStorage.setItem("firstName", JSON.stringify(data.firstName));
+        setUser({ firstName: data.firstName, token: data.token });
         router.push("/food");
       }
     },
@@ -135,7 +135,11 @@ const Login: NextPage = () => {
                     </button>
                     <button
                       onClick={() => {
-                        mutate({ email: "johndoe@gmail.com", password: "Test12345!" });
+                        mutate({
+                          email: "johndoe@gmail.com",
+                          password: "Test12345!",
+                          isGuest: true,
+                        });
                       }}
                       className="flex mt-4 justify-center w-full px-4 py-2 text-sm font-medium text-brand-600 border border-brand-600 rounded-md shadow-sm bg-white hover:bg-brand-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500"
                     >

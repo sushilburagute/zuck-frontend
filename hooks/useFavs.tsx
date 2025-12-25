@@ -1,9 +1,9 @@
-import axios from "axios";
 import { useContext, useEffect, useState } from "react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { UserContext } from "../context/UserContext";
 import { IDish } from "../types/IDish";
 import { toast } from "react-hot-toast";
+import { fetchFavouritesData, updateFavouritesData } from "../lib/localData";
 
 export default function useFavs(_id?: string) {
   const { user } = useContext(UserContext);
@@ -11,13 +11,10 @@ export default function useFavs(_id?: string) {
 
   const { isLoading: isFavLoading, data: favData } = useQuery({
     queryKey: ["favourites"],
-    queryFn: () =>
-      axios.get("https://zuck-backend.up.railway.app/api/user/favourites/", {
-        headers: {
-          "Content-type": "Application/json",
-          "X-Auth-Token": user.token,
-        },
-      }),
+    queryFn: async () => {
+      const data = await fetchFavouritesData(user.token);
+      return { data };
+    },
     enabled: user.token !== "",
   });
 
@@ -31,12 +28,7 @@ export default function useFavs(_id?: string) {
 
   const { mutate } = useMutation({
     mutationFn: async (data: any) => {
-      return await axios.post("https://zuck-backend.up.railway.app/api/user/favourites/", data, {
-        headers: {
-          "Content-type": "Application/json",
-          "X-Auth-Token": user.token,
-        },
-      });
+      return await updateFavouritesData(user.token, data._id, data.type);
     },
     onSuccess: () => {
       toast.success(isFav ? "Removed from Favourites" : "Added to Favourites");

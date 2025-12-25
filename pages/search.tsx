@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import { Navbar, SEO, Footer, Layout, Card, Jumbotron } from "../components";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
 import Spinner from "../components/Spinner/Spinner";
 import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { ChangeEvent, useState } from "react";
@@ -10,13 +9,14 @@ import Image from "next/image";
 import { stagger } from "./../animation/stagger";
 import { motion } from "framer-motion";
 import { fadeInUp } from "../animation/fadeInUp";
+import { fetchFoodData } from "../lib/localData";
 
 const Search: NextPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResult, setSearchResult] = useState<[IDish] | [] | null>(null);
   const { isLoading, isError, data } = useQuery({
     queryKey: ["dishes"],
-    queryFn: () => axios.get("https://zuck-backend.up.railway.app/api/food"),
+    queryFn: fetchFoodData,
   });
 
   if (isError)
@@ -28,7 +28,8 @@ const Search: NextPage = () => {
 
   function handleSubmit(e: ChangeEvent<HTMLFormElement>) {
     e.preventDefault();
-    const result: [IDish] = data?.data.allDishes.filter(
+    if (!data?.allDishes) return;
+    const result = data.allDishes.filter(
       (dish: IDish) =>
         dish.name.toLocaleLowerCase("en-US") == searchQuery.toLocaleLowerCase("en-US")
     );

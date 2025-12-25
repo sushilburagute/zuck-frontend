@@ -1,21 +1,29 @@
-import axios from "axios";
-import { NextPage, NextPageContext } from "next";
+import { NextPage } from "next";
 import { Navbar, Layout, Jumbotron, SortBar, Card, SEO, Footer } from "../../components/index";
 import Spinner from "../../components/Spinner/Spinner";
 import { IDish } from "../../types/IDish";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { stagger } from "./../../animation/stagger";
 import { fadeInUp } from "../../animation/fadeInUp";
+import { useQuery } from "@tanstack/react-query";
+import { fetchFoodData } from "../../lib/localData";
 
-interface IProps {
-  data: IDish[];
-}
+const Food: NextPage = () => {
+  const [dishData, setdishData] = useState<IDish[] | undefined>(undefined);
+  const [sortedDishes, setsortedDishes] = useState<IDish[] | undefined>(undefined);
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["dishes"],
+    queryFn: fetchFoodData,
+  });
 
-const Food: NextPage<IProps> = ({ data }) => {
-  const [dishData, setdishData] = useState<IDish[] | undefined>(data);
-  const [sortedDishes, setsortedDishes] = useState<IDish[] | undefined>(data);
+  useEffect(() => {
+    if (!isLoading && data?.allDishes) {
+      setdishData(data.allDishes);
+      setsortedDishes(data.allDishes);
+    }
+  }, [data, isLoading]);
 
   return (
     <>
@@ -51,7 +59,9 @@ const Food: NextPage<IProps> = ({ data }) => {
           setsortedDishes={setsortedDishes}
         />
 
-        {sortedDishes === undefined ? (
+        {isError ? (
+          <div>Something went wrong!</div>
+        ) : sortedDishes === undefined ? (
           <Spinner />
         ) : (
           <motion.div
@@ -84,12 +94,6 @@ const Food: NextPage<IProps> = ({ data }) => {
       <Footer />
     </>
   );
-};
-
-Food.getInitialProps = async () => {
-  const res = await axios.get("https://zuck-backend.up.railway.app/api/food");
-  const data = await res.data.allDishes;
-  return { data };
 };
 
 export default Food;

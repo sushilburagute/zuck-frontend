@@ -1,0 +1,148 @@
+{
+  "allDishes": [
+    {
+      "_id": "dish-1",
+      "name": "Classic Margherita",
+      "deliveryTime": 25,
+      "price": 249,
+      "discount": 10,
+      "rating": 4.6,
+      "veg": true,
+      "type": "MAIN_COURSE",
+      "image": "https://images.unsplash.com/photo-1574071318508-1cdbab80d002?auto=format&fit=crop&w=900&q=80",
+      "description": "Stone-baked pizza with basil, mozzarella, and a bright tomato sauce."
+    },
+    {
+      "_id": "dish-2",
+      "name": "Spicy Chicken Tikka",
+      "deliveryTime": 30,
+      "price": 329,
+      "discount": 0,
+      "rating": 4.4,
+      "veg": false,
+      "type": "MAIN_COURSE",
+      "image": "https://images.unsplash.com/photo-1604909052743-94e838986d24?auto=format&fit=crop&w=900&q=80",
+      "description": "Smoky grilled chicken with yogurt masala and a lemon finish."
+    },
+    {
+      "_id": "dish-3",
+      "name": "Loaded Veggie Burger",
+      "deliveryTime": 20,
+      "price": 199,
+      "discount": 15,
+      "rating": 4.2,
+      "veg": true,
+      "type": "FAST_FOOD",
+      "image": "https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=900&q=80",
+      "description": "Plant-forward patty with cheddar, lettuce, and tangy house sauce."
+    },
+    {
+      "_id": "dish-4",
+      "name": "Crispy Fries",
+      "deliveryTime": 15,
+      "price": 99,
+      "discount": 0,
+      "rating": 4.1,
+      "veg": true,
+      "type": "FAST_FOOD",
+      "image": "https://images.unsplash.com/photo-1541592106381-b31e9677c0e5?auto=format&fit=crop&w=900&q=80",
+      "description": "Golden fries with a light dusting of sea salt."
+    },
+    {
+      "_id": "dish-5",
+      "name": "Paneer Butter Masala",
+      "deliveryTime": 35,
+      "price": 289,
+      "discount": 5,
+      "rating": 4.7,
+      "veg": true,
+      "type": "MAIN_COURSE",
+      "image": "https://images.unsplash.com/photo-1701579231378-3726490a407b?auto=format&fit=crop&w=900&q=80",
+      "description": "Creamy tomato gravy with soft paneer cubes and warm spices."
+    },
+    {
+      "_id": "dish-6",
+      "name": "Choco Lava Cake",
+      "deliveryTime": 18,
+      "price": 149,
+      "discount": 0,
+      "rating": 4.8,
+      "veg": true,
+      "type": "DESSERT",
+      "image": "https://images.unsplash.com/photo-1617305855058-336d24456869?auto=format&fit=crop&w=900&q=80",
+      "description": "Warm chocolate cake with a molten center and cocoa dust."
+    },
+    {
+      "_id": "dish-7",
+      "name": "Berry Cheesecake",
+      "deliveryTime": 20,
+      "price": 189,
+      "discount": 10,
+      "rating": 4.5,
+      "veg": true,
+      "type": "DESSERT",
+      "image": "https://images.unsplash.com/photo-1505252585461-04db1eb84625?auto=format&fit=crop&w=900&q=80",
+      "description": "Creamy cheesecake topped with mixed berry compote."
+    },
+    {
+      "_id": "dish-8",
+      "name": "Peri Peri Wings",
+      "deliveryTime": 28,
+      "price": 259,
+      "discount": 0,
+      "rating": 4.3,
+      "veg": false,
+      "type": "FAST_FOOD",
+      "image": "https://images.unsplash.com/photo-1606756790138-261d2b21cd75?auto=format&fit=crop&w=900&q=80",
+      "description": "Crispy wings tossed in peri peri glaze with a spicy kick."
+    },
+    {
+      "_id": "dish-9",
+      "name": "Garlic Butter Noodles",
+      "deliveryTime": 22,
+      "price": 219,
+      "discount": 0,
+      "rating": 4.0,
+      "veg": true,
+      "type": "MAIN_COURSE",
+      "image": "https://images.unsplash.com/photo-1548940740-204726a19be3?auto=format&fit=crop&w=900&q=80",
+      "description": "Silky noodles tossed with garlic butter, herbs, and parmesan."
+    },
+    {
+      "_id": "dish-10",
+      "name": "Sushi Bento",
+      "deliveryTime": 32,
+      "price": 399,
+      "discount": 0,
+      "rating": 4.6,
+      "veg": false,
+      "type": "MAIN_COURSE",
+      "image": "https://images.unsplash.com/photo-1546069901-eacef0df6022?auto=format&fit=crop&w=900&q=80",
+      "description": "Assorted sushi with pickled ginger, wasabi, and soy dip."
+    },
+    {
+      "_id": "dish-11",
+      "name": "Mango Ice Cream",
+      "deliveryTime": 12,
+      "price": 129,
+      "discount": 0,
+      "rating": 4.2,
+      "veg": true,
+      "type": "DESSERT",
+      "image": "https://images.unsplash.com/photo-1591677445540-08028eeb3021?auto=format&fit=crop&w=900&q=80",
+      "description": "Chilled mango scoop with a silky, fruity finish."
+    },
+    {
+      "_id": "dish-12",
+      "name": "Double Smash Burger",
+      "deliveryTime": 24,
+      "price": 279,
+      "discount": 12,
+      "rating": 4.5,
+      "veg": false,
+      "type": "FAST_FOOD",
+      "image": "https://images.unsplash.com/photo-1551782450-a2132b4ba21d?auto=format&fit=crop&w=900&q=80",
+      "description": "Two smashed patties, caramelized onions, and melted cheese."
+    }
+  ]
+}

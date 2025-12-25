@@ -1,4 +1,3 @@
-import axios from "axios";
 import { NextPage } from "next";
 import Image from "next/image";
 import { useQuery } from "@tanstack/react-query";
@@ -9,6 +8,7 @@ import { IDish } from "../types/IDish";
 import { motion } from "framer-motion";
 import { stagger } from "./../animation/stagger";
 import { fadeInUp } from "../animation/fadeInUp";
+import { fetchFavouritesData } from "../lib/localData";
 
 const Favourites: NextPage = () => {
   const { user } = useContext(UserContext);
@@ -16,13 +16,10 @@ const Favourites: NextPage = () => {
 
   const { isLoading, data } = useQuery({
     queryKey: ["favourites"],
-    queryFn: () =>
-      axios.get("https://zuck-backend.up.railway.app/api/user/favourites/", {
-        headers: {
-          "Content-type": "Application/json",
-          "X-Auth-Token": user.token,
-        },
-      }),
+    queryFn: async () => {
+      const favData = await fetchFavouritesData(user.token);
+      return { data: favData };
+    },
     refetchOnMount: true,
     enabled: user.firstName !== "",
   });

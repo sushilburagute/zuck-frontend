@@ -1,4 +1,4 @@
-import { NextPage, NextPageContext } from "next";
+import { NextPage } from "next";
 
 import { Navbar, SEO, Footer, VegIcon, Spinner } from "../../components/index";
 import {
@@ -10,36 +10,47 @@ import {
   CurrencyRupeeIcon,
 } from "@heroicons/react/24/outline";
 import { CheckIcon, StarIcon, HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
-import axios from "axios";
 import clsx from "clsx";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
-import { IDish } from "./../../types/IDish";
 import useFavs from "./../../hooks/useFavs";
 import useCart from "./../../hooks/useCart";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { ICart } from "../../types/ICart";
 import { UserContext } from "../../context/UserContext";
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
 import { fadeInUp } from "../../animation/fadeInUp";
 import { stagger } from "./../../animation/stagger";
+import { useQuery } from "@tanstack/react-query";
+import { fetchFoodData } from "../../lib/localData";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-interface IProps {
-  dish: IDish;
-}
+const FoodPage: NextPage = () => {
+  const router = useRouter();
+  const dishId = useMemo(() => {
+    if (!router.isReady) return "";
+    return Array.isArray(router.query.id) ? router.query.id[0] : router.query.id || "";
+  }, [router.isReady, router.query.id]);
 
-const FoodPage: NextPage<IProps> = ({ dish }) => {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["dish", dishId],
+    queryFn: fetchFoodData,
+    enabled: dishId !== "",
+  });
+
+  const dish = data?.allDishes.find((item) => item._id === dishId);
   const { user } = useContext(UserContext);
   const [isButtonDisabled, setIsButtonDisabled] = useState<boolean>(false);
   const [cartQuantity, setCartQuantity] = useState<number>(0);
   const [inCart, setInCart] = useState<boolean>(false);
-  const { mutate: favMutate, isFav, isFavLoading } = useFavs(dish._id);
-  const { mutate: cartMutate, cartData, isCartLoading } = useCart(dish._id);
+  const [heroImage, setHeroImage] = useState<string>("/empty.png");
+  const { mutate: favMutate, isFav, isFavLoading } = useFavs(dishId);
+  const { mutate: cartMutate, cartData, isCartLoading } = useCart(dishId);
 
   useEffect(() => {
     if (!isCartLoading && dish._id) {
@@ -48,7 +59,11 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
         cartItem._id._id === dish._id && setInCart(true);
       });
     }
-  }, [isCartLoading, cartData, dish._id]);
+  }, [isCartLoading, cartData, dishId]);
+
+  useEffect(() => {
+    setHeroImage(dish?.image || "/empty.png");
+  }, [dish?.image]);
 
   function handleFav() {
     user.token !== ""
@@ -94,8 +109,32 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
 
   const breadcrumbs = [
     { id: 1, name: "Food", href: "/food" },
-    { id: 2, name: dish.name, href: "#" },
+    { id: 2, name: dish?.name || "Loading", href: "#" },
   ];
+
+  if (isError) {
+    return (
+      <>
+        <SEO title="Food" />
+        <Navbar />
+        <div className="flex items-center justify-center py-20">Something went wrong!</div>
+        <Footer />
+      </>
+    );
+  }
+
+  if (isLoading || !dish) {
+    return (
+      <>
+        <SEO title="Food" />
+        <Navbar />
+        <div className="flex items-center justify-center py-20">
+          <Spinner />
+        </div>
+        <Footer />
+      </>
+    );
+  }
 
   return (
     <>
@@ -268,11 +307,12 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
                   className="overflow-hidden rounded-lg aspect-w-1 aspect-h-1"
                 >
                   <Image
-                    src={dish.image}
+                    src={heroImage}
                     alt={dish.name}
                     fill
                     sizes="(max-width: 1024px) 100vw, 50vw"
                     className="object-cover"
+                    onError={() => setHeroImage("/empty.png")}
                   />
                 </motion.div>
               </div>
@@ -303,15 +343,6 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
       </motion.div>
     </>
   );
-};
-
-FoodPage.getInitialProps = async (ctx: NextPageContext) => {
-  const { id } = ctx.query;
-
-  const res = await axios.get(clsx("https://zuck-backend.up.railway.app/api/food/" + id));
-  const dish = await res.data.dishItem[0];
-
-  return { dish };
 };
 
 export default FoodPage;

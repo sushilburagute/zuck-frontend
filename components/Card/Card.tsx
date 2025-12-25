@@ -13,7 +13,7 @@ import clsx from "clsx";
 import useFavs from "./../../hooks/useFavs";
 import VegIcon from "../VegIcon/VegIcon";
 import { UserContext } from "./../../context/UserContext";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 
 import toast from "react-hot-toast";
 import { motion } from "framer-motion";
@@ -34,6 +34,11 @@ export interface ICard {
 const Card = ({ _id, name, type, rating, deliveryTime, imageSrc, price, discount, veg }: ICard) => {
   const { user } = useContext(UserContext);
   const { mutate, isFav } = useFavs(_id);
+  const [cardImage, setCardImage] = useState(imageSrc || "/empty.png");
+
+  useEffect(() => {
+    setCardImage(imageSrc || "/empty.png");
+  }, [imageSrc]);
 
   function handleClick() {
     user.token !== ""
@@ -74,11 +79,12 @@ const Card = ({ _id, name, type, rating, deliveryTime, imageSrc, price, discount
       >
         <div className="relative w-full h-40 bg-gray-300 rounded-sm">
           <Image
-            src={imageSrc}
+            src={cardImage}
             alt={name}
             fill
             sizes="(max-width: 768px) 100vw, 25vw"
             className="object-cover"
+            onError={() => setCardImage("/empty.png")}
           />
 
           <div

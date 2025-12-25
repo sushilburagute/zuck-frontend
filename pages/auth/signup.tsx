@@ -5,7 +5,6 @@ import { useRouter } from "next/router";
 
 import { useForm } from "react-hook-form";
 import { useMutation } from "@tanstack/react-query";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useContext } from "react";
 
@@ -15,6 +14,7 @@ import { SEO } from "../../components";
 import { motion } from "framer-motion";
 import { stagger } from "./../../animation/stagger";
 import { fadeInUp } from "../../animation/fadeInUp";
+import { signupUser } from "../../lib/localData";
 
 const errorNotify = (error: any) => toast.error(`Error: ${error}`);
 
@@ -25,13 +25,13 @@ const Signup: NextPage = () => {
 
   const { mutate, isPending, isError, error } = useMutation({
     mutationFn: async (data: any) => {
-      return await axios.post("https://zuck-backend.up.railway.app/api/auth/sign-up", data);
+      return await signupUser(data);
     },
     onSuccess: (data) => {
-      if (data.data?.msg === "Your Account has been created") {
-        localStorage.setItem("user", JSON.stringify(data.data?.token));
-        localStorage.setItem("firstName", JSON.stringify(data.data?.firstName));
-        setUser({ firstName: data.data?.firstName, token: data.data?.token });
+      if (data.msg === "Your Account has been created") {
+        localStorage.setItem("token", JSON.stringify(data.token));
+        localStorage.setItem("firstName", JSON.stringify(data.firstName));
+        setUser({ firstName: data.firstName, token: data.token });
         router.push("/food");
       }
     },
