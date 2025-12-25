@@ -53,10 +53,10 @@ const FoodPage: NextPage = () => {
   const { mutate: cartMutate, cartData, isCartLoading } = useCart(dishId);
 
   useEffect(() => {
-    if (!isCartLoading && dish._id) {
+    if (!isCartLoading && dishId) {
       cartData?.data.foodCart.map((cartItem: ICart) => {
-        cartItem._id._id === dish._id && setCartQuantity(cartItem.quantity);
-        cartItem._id._id === dish._id && setInCart(true);
+        cartItem._id._id === dishId && setCartQuantity(cartItem.quantity);
+        cartItem._id._id === dishId && setInCart(true);
       });
     }
   }, [isCartLoading, cartData, dishId]);
@@ -67,18 +67,18 @@ const FoodPage: NextPage = () => {
 
   function handleFav() {
     user.token !== ""
-      ? favMutate({ _id: dish._id, type: isFav ? "REMOVE_FROM_FAVOURITES" : "ADD_TO_FAVOURITES" })
+      ? favMutate({ _id: dishId, type: isFav ? "REMOVE_FROM_FAVOURITES" : "ADD_TO_FAVOURITES" })
       : toast.error("You need to be signed in to do that");
   }
 
   function handleAddToCart() {
     user.token !== ""
-      ? cartMutate({ _id: dish._id, type: "ADD_TO_CART", quantity: 1 })
+      ? cartMutate({ _id: dishId, type: "ADD_TO_CART", quantity: 1 })
       : toast.error("You need to be signed in to do that");
   }
   function handleDeletefromCart() {
     if (user.token !== "") {
-      cartMutate({ _id: dish._id, type: "REMOVE_FROM_CART", quantity: cartQuantity });
+      cartMutate({ _id: dishId, type: "REMOVE_FROM_CART", quantity: cartQuantity });
       setInCart(false);
     } else {
       toast.error("You need to be signed in to do that");
@@ -87,7 +87,7 @@ const FoodPage: NextPage = () => {
 
   function handleAddQuantityToCart() {
     if (user.token !== "") {
-      cartMutate({ _id: dish._id, type: "ADD_QUANTITY_IN_CART", quantity: cartQuantity });
+      cartMutate({ _id: dishId, type: "ADD_QUANTITY_IN_CART", quantity: cartQuantity });
       setCartQuantity(cartQuantity + 1);
       setIsButtonDisabled(false);
     } else {
@@ -97,7 +97,7 @@ const FoodPage: NextPage = () => {
   function handleSubtractQuantityCart() {
     if (user.token !== "") {
       if (cartQuantity !== 1) {
-        cartMutate({ _id: dish._id, type: "SUBTRACT_QUANTITY_IN_CART", quantity: cartQuantity });
+        cartMutate({ _id: dishId, type: "SUBTRACT_QUANTITY_IN_CART", quantity: cartQuantity });
         setCartQuantity(cartQuantity - 1);
       } else {
         setIsButtonDisabled(true);

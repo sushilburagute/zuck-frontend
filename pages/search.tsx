@@ -13,7 +13,7 @@ import { fetchFoodData } from "../lib/localData";
 
 const Search: NextPage = () => {
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [searchResult, setSearchResult] = useState<[IDish] | [] | null>(null);
+  const [searchResult, setSearchResult] = useState<IDish[] | null>(null);
   const { isLoading, isError, data } = useQuery({
     queryKey: ["dishes"],
     queryFn: fetchFoodData,
