@@ -1,14 +1,14 @@
 import { ICart } from "../../types/ICart";
 import { useState } from "react";
 import { CreditCardIcon, CurrencyRupeeIcon } from "@heroicons/react/24/outline";
-import { AxiosResponse } from "axios";
 import Spinner from "../Spinner/Spinner";
 import { motion } from "framer-motion";
 import { fadeInUp } from "../../animation/fadeInUp";
+import { CartData } from "../../lib/localData";
 
 interface IProps {
   isCartLoading: boolean;
-  cartData?: AxiosResponse<any, any>;
+  cartData?: { data: CartData };
 }
 
 const BillCard = ({ isCartLoading, cartData }: IProps) => {
