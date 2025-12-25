@@ -1,7 +1,7 @@
 import axios from "axios";
 import { NextPage } from "next";
 import Image from "next/image";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Navbar, Jumbotron, SEO, Layout, Card, Footer } from "../components/index";
 import { UserContext } from "../context/UserContext";
 import { useContext, useEffect, useState } from "react";
@@ -14,20 +14,18 @@ const Favourites: NextPage = () => {
   const { user } = useContext(UserContext);
   const [favDishes, setfavDishes] = useState<IDish[] | undefined>(undefined);
 
-  const { isLoading, data } = useQuery(
-    "favourites",
-    () =>
+  const { isLoading, data } = useQuery({
+    queryKey: ["favourites"],
+    queryFn: () =>
       axios.get("https://zuck-backend.up.railway.app/api/user/favourites/", {
         headers: {
           "Content-type": "Application/json",
           "X-Auth-Token": user.token,
         },
       }),
-    {
-      refetchOnMount: true,
-      enabled: user.firstName !== "",
-    }
-  );
+    refetchOnMount: true,
+    enabled: user.firstName !== "",
+  });
 
   useEffect(() => {
     if (!isLoading) {

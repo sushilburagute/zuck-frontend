@@ -1,11 +1,16 @@
 import { navlinks } from "./Navlinks";
 import Link from "next/link";
-import { useRouter } from "next/dist/client/router";
+import { useRouter } from "next/router";
 import clsx from "clsx";
 
 import { Fragment, useContext } from "react";
 import { Popover, Transition, Menu } from "@headlessui/react";
-import { ChevronDownIcon, MenuIcon, UserCircleIcon, XIcon } from "@heroicons/react/outline";
+import {
+  Bars3Icon,
+  ChevronDownIcon,
+  UserCircleIcon,
+  XMarkIcon,
+} from "@heroicons/react/24/outline";
 import { UserContext } from "./../../context/UserContext";
 
 function Navbar() {
@@ -17,14 +22,14 @@ function Navbar() {
         <>
           <div className="flex items-center justify-between px-4 py-6 shadow-lg sm:px-6 md:justify-start md:space-x-10 md:px-24">
             <div>
-              <Link href="/food">
-                <a className="text-4xl italic font-bold text-brand-600">Zuck</a>
+              <Link href="/food" className="text-4xl italic font-bold text-brand-600">
+                Zuck
               </Link>
             </div>
             <div className="-my-2 -mr-2 md:hidden">
               <Popover.Button className="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-500">
                 <span className="sr-only">Open menu</span>
-                <MenuIcon className="w-6 h-6" aria-hidden="true" />
+                <Bars3Icon className="w-6 h-6" aria-hidden="true" />
               </Popover.Button>
             </div>
             <div className="hidden md:flex-1 md:flex md:items-center md:justify-between">
@@ -32,15 +37,14 @@ function Navbar() {
                 {navlinks.map(({ id, route, name, icon }) => {
                   return (
                     <span key={id} className="hidden ml-8 text-gray-900 lg:flex">
-                      <Link href={route}>
-                        <a
-                          className={clsx("flex font-semibold", {
-                            "text-brand-600 ": router.pathname === route,
-                            "text-gray-600": !(router.pathname === route),
-                          })}
-                        >
-                          {icon} {name}
-                        </a>
+                      <Link
+                        href={route}
+                        className={clsx("flex font-semibold", {
+                          "text-brand-600 ": router.pathname === route,
+                          "text-gray-600": !(router.pathname === route),
+                        })}
+                      >
+                        {icon} {name}
                       </Link>
                     </span>
                   );
@@ -49,15 +53,17 @@ function Navbar() {
               <div className="flex items-center md:ml-12">
                 {user.firstName === "" ? (
                   <>
-                    <Link href="/auth/login">
-                      <a className="text-base font-medium text-gray-500 hover:text-gray-900">
-                        Login
-                      </a>
+                    <Link
+                      href="/auth/login"
+                      className="text-base font-medium text-gray-500 hover:text-gray-900"
+                    >
+                      Login
                     </Link>
-                    <Link href="/auth/signup">
-                      <a className="inline-flex items-center justify-center px-4 py-2 ml-8 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-brand-600 hover:bg-brand-700">
-                        Sign up
-                      </a>
+                    <Link
+                      href="/auth/signup"
+                      className="inline-flex items-center justify-center px-4 py-2 ml-8 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-brand-600 hover:bg-brand-700"
+                    >
+                      Sign up
                     </Link>{" "}
                   </>
                 ) : (
@@ -127,14 +133,14 @@ function Navbar() {
                 <div className="px-5 pt-5 pb-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <Link href="/food">
-                        <a className="text-4xl italic font-bold text-brand-600">Zuck</a>
+                      <Link href="/food" className="text-4xl italic font-bold text-brand-600">
+                        Zuck
                       </Link>
                     </div>
                     <div className="-mr-2">
                       <Popover.Button className="inline-flex items-center justify-center p-2 text-gray-400 bg-white rounded-md hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-brand-500">
                         <span className="sr-only">Close menu</span>
-                        <XIcon className="w-6 h-6" aria-hidden="true" />
+                        <XMarkIcon className="w-6 h-6" aria-hidden="true" />
                       </Popover.Button>
                     </div>
                   </div>
@@ -163,20 +169,19 @@ function Navbar() {
                     {user.firstName === "" ? (
                       <>
                         {" "}
-                        <Link href="/auth/login">
-                          <a
-                            href="#"
-                            className="flex items-center justify-center w-full px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-brand-600 hover:bg-brand-700"
-                          >
-                            Login
-                          </a>
+                        <Link
+                          href="/auth/login"
+                          className="flex items-center justify-center w-full px-4 py-2 text-base font-medium text-white border border-transparent rounded-md shadow-sm bg-brand-600 hover:bg-brand-700"
+                        >
+                          Login
                         </Link>
                         <p className="mt-6 text-base font-medium text-center text-gray-500">
                           Ready to create a new account?{" "}
-                          <Link href="/auth/signup">
-                            <a href="#" className="text-brand-600 hover:text-brand-500">
-                              Sign up
-                            </a>
+                          <Link
+                            href="/auth/signup"
+                            className="text-brand-600 hover:text-brand-500"
+                          >
+                            Sign up
                           </Link>
                         </p>
                       </>

@@ -4,7 +4,7 @@ import Image from "next/image";
 import { useRouter } from "next/router";
 
 import { useForm } from "react-hook-form";
-import { useMutation } from "react-query";
+import { useMutation } from "@tanstack/react-query";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useContext } from "react";
@@ -23,21 +23,19 @@ const Signup: NextPage = () => {
   const router = useRouter();
   const { setUser } = useContext(UserContext);
 
-  const { mutate, isLoading, isError, error } = useMutation(
-    async (data: any) => {
+  const { mutate, isPending, isError, error } = useMutation({
+    mutationFn: async (data: any) => {
       return await axios.post("https://zuck-backend.up.railway.app/api/auth/sign-up", data);
     },
-    {
-      onSuccess: (data) => {
-        if (data.data?.msg === "Your Account has been created") {
-          localStorage.setItem("user", JSON.stringify(data.data?.token));
-          localStorage.setItem("firstName", JSON.stringify(data.data?.firstName));
-          setUser({ firstName: data.data?.firstName, token: data.data?.token });
-          router.push("/food");
-        }
-      },
-    }
-  );
+    onSuccess: (data) => {
+      if (data.data?.msg === "Your Account has been created") {
+        localStorage.setItem("user", JSON.stringify(data.data?.token));
+        localStorage.setItem("firstName", JSON.stringify(data.data?.firstName));
+        setUser({ firstName: data.data?.firstName, token: data.data?.token });
+        router.push("/food");
+      }
+    },
+  });
 
   const onSubmit = handleSubmit((data) => {
     mutate(data);
@@ -56,18 +54,16 @@ const Signup: NextPage = () => {
         <div className="flex flex-col justify-center flex-1 px-4 py-12 sm:px-6 lg:flex-none lg:px-20 xl:px-24">
           <div className="w-full max-w-sm mx-auto lg:w-96">
             <div>
-              <Link href="/">
-                <a className="text-4xl italic font-bold text-brand-600">Zuck</a>
+              <Link href="/" className="text-4xl italic font-bold text-brand-600">
+                Zuck
               </Link>
               <h2 className="mt-6 text-3xl font-extrabold text-gray-900">
                 Ready to create a new account?
               </h2>
               <p className="mt-2 text-sm text-gray-600 max-w">
                 Or{" "}
-                <Link href="/auth/login">
-                  <a href="#" className="font-medium text-brand-600 hover:text-brand-500">
-                    log in here.
-                  </a>
+                <Link href="/auth/login" className="font-medium text-brand-600 hover:text-brand-500">
+                  log in here.
                 </Link>
               </p>
             </div>
@@ -157,7 +153,7 @@ const Signup: NextPage = () => {
                       type="submit"
                       className="flex justify-center w-full px-4 py-2 text-sm font-medium text-white border border-transparent rounded-md shadow-sm bg-brand-600 hover:bg-brand-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-brand-500"
                     >
-                      {isLoading ? <Spinner textColor="text-white" /> : "Create a new account"}
+                      {isPending ? <Spinner textColor="text-white" /> : "Create a new account"}
                     </button>
                   </motion.div>
                 </form>
@@ -169,8 +165,9 @@ const Signup: NextPage = () => {
         <div className="relative flex-1 hidden w-0 lg:block">
           <Image
             alt="Burger with Fries"
-            layout="fill"
-            objectFit="cover"
+            fill
+            sizes="(max-width: 1024px) 100vw, 50vw"
+            className="object-cover"
             quality={100}
             src="https://images.unsplash.com/photo-1610614991969-ceeb293e7ff5?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80"
           />

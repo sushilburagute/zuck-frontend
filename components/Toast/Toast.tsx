@@ -1,6 +1,6 @@
 import * as React from "react";
 import { toast, ToastBar, Toaster } from "react-hot-toast";
-import { XIcon } from "@heroicons/react/outline";
+import { XMarkIcon } from "@heroicons/react/24/outline";
 
 const Toast = () => {
   return (
@@ -27,7 +27,7 @@ const Toast = () => {
                     className="rounded-full p-1 ring-primary-400 transition hover:bg-brand-100  branfocus:outline-none focus-visible:ring"
                     onClick={() => toast.dismiss(t.id)}
                   >
-                    <XIcon className="w-5 h-5" />
+                    <XMarkIcon className="w-5 h-5" />
                   </button>
                 )}
               </>

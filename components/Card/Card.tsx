@@ -3,8 +3,8 @@ import {
   CurrencyRupeeIcon,
   TicketIcon,
   ClockIcon,
-} from "@heroicons/react/outline";
-import { HeartIcon as HeartIconSolid, StarIcon } from "@heroicons/react/solid";
+} from "@heroicons/react/24/outline";
+import { HeartIcon as HeartIconSolid, StarIcon } from "@heroicons/react/24/solid";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -73,7 +73,13 @@ const Card = ({ _id, name, type, rating, deliveryTime, imageSrc, price, discount
         className="p-4 border-2 border-gray-100 hover:border-gray-200 rounded-lg shadow-none hover:shadow-sm"
       >
         <div className="relative w-full h-40 bg-gray-300 rounded-sm">
-          <Image src={imageSrc} alt={name} layout="fill" objectFit="cover" />
+          <Image
+            src={imageSrc}
+            alt={name}
+            fill
+            sizes="(max-width: 768px) 100vw, 25vw"
+            className="object-cover"
+          />
 
           <div
             className="absolute p-1 bg-white rounded-full w-7 h-7 hover:bg-red-200 top-2 left-2"
@@ -118,10 +124,11 @@ const Card = ({ _id, name, type, rating, deliveryTime, imageSrc, price, discount
           </div>
           <hr />
           <div>
-            <Link href={clsx("/food/" + _id)} passHref>
-              <button className="w-full py-2 text-sm font-bold tracking-tight capitalize transition duration-300 ease-in-out rounded text-brand-400 hover:bg-brand-100 hover:text-brand-500">
-                View Item
-              </button>
+            <Link
+              href={clsx("/food/" + _id)}
+              className="block w-full py-2 text-sm font-bold tracking-tight capitalize transition duration-300 ease-in-out rounded text-brand-400 hover:bg-brand-100 hover:text-brand-500 text-center"
+            >
+              View Item
             </Link>
           </div>
         </div>

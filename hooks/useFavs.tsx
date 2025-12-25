@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useContext, useEffect, useState } from "react";
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import { UserContext } from "../context/UserContext";
 import { IDish } from "../types/IDish";
 import { toast } from "react-hot-toast";
@@ -9,19 +9,17 @@ export default function useFavs(_id?: string) {
   const { user } = useContext(UserContext);
   const [isFav, setIsFav] = useState<Boolean>(false);
 
-  const { isLoading: isFavLoading, data: favData } = useQuery(
-    "favourites",
-    () =>
+  const { isLoading: isFavLoading, data: favData } = useQuery({
+    queryKey: ["favourites"],
+    queryFn: () =>
       axios.get("https://zuck-backend.up.railway.app/api/user/favourites/", {
         headers: {
           "Content-type": "Application/json",
           "X-Auth-Token": user.token,
         },
       }),
-    {
-      enabled: user.token !== "",
-    }
-  );
+    enabled: user.token !== "",
+  });
 
   useEffect(() => {
     if (!isFavLoading) {
@@ -31,8 +29,8 @@ export default function useFavs(_id?: string) {
     }
   }, [favData, isFavLoading, _id]);
 
-  const { mutate } = useMutation(
-    async (data: any) => {
+  const { mutate } = useMutation({
+    mutationFn: async (data: any) => {
       return await axios.post("https://zuck-backend.up.railway.app/api/user/favourites/", data, {
         headers: {
           "Content-type": "Application/json",
@@ -40,16 +38,14 @@ export default function useFavs(_id?: string) {
         },
       });
     },
-    {
-      onSuccess: () => {
-        toast.success(isFav ? "Removed from Favourites" : "Added to Favourites");
-        setIsFav(!isFav);
-      },
-      onError: () => {
-        toast.error("There was some error completing your request.");
-      },
-    }
-  );
+    onSuccess: () => {
+      toast.success(isFav ? "Removed from Favourites" : "Added to Favourites");
+      setIsFav((prev) => !prev);
+    },
+    onError: () => {
+      toast.error("There was some error completing your request.");
+    },
+  });
 
   return { isFav, favData, mutate, isFavLoading };
 }

@@ -9,28 +9,29 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@headlessui/react": "^1.4.1",
-    "@heroicons/react": "^1.0.4",
-    "@tailwindcss/aspect-ratio": "^0.4.0",
-    "@tailwindcss/forms": "^0.4.0",
-    "axios": "^0.26.1",
-    "clsx": "^1.1.1",
-    "framer-motion": "^6.2.8",
-    "next": "^12.0.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "react-hook-form": "^7.27.1",
-    "react-hot-toast": "^2.1.1",
-    "react-query": "^3.34.6"
+    "@headlessui/react": "^2.2.9",
+    "@heroicons/react": "^2.2.0",
+    "@tailwindcss/aspect-ratio": "^0.4.2",
+    "@tailwindcss/forms": "^0.5.11",
+    "@tanstack/react-query": "^5.90.12",
+    "@tanstack/react-query-devtools": "^5.91.1",
+    "axios": "^1.13.2",
+    "clsx": "^2.1.1",
+    "framer-motion": "^12.23.26",
+    "next": "^16.1.1",
+    "react": "^19.2.3",
+    "react-dom": "^19.2.3",
+    "react-hook-form": "^7.69.0",
+    "react-hot-toast": "^2.6.0"
   },
   "devDependencies": {
-    "@types/node": "^17.0.21",
-    "@types/react": "17.0.21",
-    "autoprefixer": "^10.3.4",
-    "eslint": "7.32.0",
-    "eslint-config-next": "11.1.2",
-    "postcss": "^8.3.6",
-    "tailwindcss": "^2.2.15",
-    "typescript": "4.4.3"
+    "@types/node": "^25.0.3",
+    "@types/react": "^19.2.7",
+    "autoprefixer": "^10.4.23",
+    "eslint": "^9.39.2",
+    "eslint-config-next": "^16.1.1",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^3.4.19",
+    "typescript": "^5.9.3"
   }
 }
