@@ -1,9 +1,9 @@
 import { Menu, Transition } from "@headlessui/react";
 import { Dispatch, Fragment, SetStateAction, useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/solid";
+import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { IDish } from "../../types/IDish";
 import { filterValues, sortValues } from "./values";
-import { CheckIcon } from "@heroicons/react/outline";
+import { CheckIcon } from "@heroicons/react/24/outline";
 
 interface IProps {
   totalDishes: number | undefined;

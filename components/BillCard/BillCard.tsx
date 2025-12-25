@@ -1,6 +1,6 @@
 import { ICart } from "../../types/ICart";
 import { useState } from "react";
-import { CreditCardIcon, CurrencyRupeeIcon } from "@heroicons/react/outline";
+import { CreditCardIcon, CurrencyRupeeIcon } from "@heroicons/react/24/outline";
 import { AxiosResponse } from "axios";
 import Spinner from "../Spinner/Spinner";
 import { motion } from "framer-motion";

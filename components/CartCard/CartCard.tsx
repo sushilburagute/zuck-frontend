@@ -5,9 +5,9 @@ import {
   TrashIcon,
   CurrencyRupeeIcon,
   TicketIcon,
-  ExternalLinkIcon,
-} from "@heroicons/react/outline";
-import { HeartIcon as HeartIconSolid, StarIcon } from "@heroicons/react/solid";
+  ArrowTopRightOnSquareIcon,
+} from "@heroicons/react/24/outline";
+import { HeartIcon as HeartIconSolid, StarIcon } from "@heroicons/react/24/solid";
 import VegIcon from "../VegIcon/VegIcon";
 import clsx from "clsx";
 import { ICart } from "./../../types/ICart";
@@ -101,8 +101,9 @@ const CartCard = ({ cartItem }: IProps) => {
             <Image
               src={cartItem._id.image}
               alt={cartItem._id.name}
-              layout="fill"
-              objectFit="cover"
+              fill
+              sizes="(max-width: 1024px) 0px, 192px"
+              className="object-cover"
             />
             <div
               className="absolute p-1 rounded-full w-7 h-7 hover:bg-red-50 top-3 left-3 bg-white"
@@ -121,11 +122,12 @@ const CartCard = ({ cartItem }: IProps) => {
             <div>
               <div className="inline-flex items-center">
                 <VegIcon isVeg={true} />
-                <Link href={`/food/${cartItem._id._id}`}>
-                  <a className="text-lg font-bold text-gray-800 sm:text-2xl ml-3 cursor-pointer inline-flex items-center">
-                    {cartItem._id.name}
-                    <ExternalLinkIcon className="w-4 h-4 sm:w-5 sm:h-5 ml-3" />
-                  </a>
+                <Link
+                  href={`/food/${cartItem._id._id}`}
+                  className="text-lg font-bold text-gray-800 sm:text-2xl ml-3 cursor-pointer inline-flex items-center"
+                >
+                  {cartItem._id.name}
+                  <ArrowTopRightOnSquareIcon className="w-4 h-4 sm:w-5 sm:h-5 ml-3" />
                 </Link>
               </div>
               <div className="flex mt-4 items-center">

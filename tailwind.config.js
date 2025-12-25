@@ -6,9 +6,8 @@ const brandColor = colors.orange;
  * @type {import('tailwindcss/tailwind-config').TailwindConfig }
  **/
 module.exports = {
-  mode: "jit",
   darkMode: "class",
-  purge: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
+  content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
   plugins: [require("@tailwindcss/forms"), require("@tailwindcss/aspect-ratio")],
   theme: {
     extend: {

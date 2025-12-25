@@ -1,6 +1,6 @@
 import type { NextPage } from "next";
 import Image from "next/image";
-import { ArrowRightIcon, ExternalLinkIcon } from "@heroicons/react/outline/";
+import { ArrowRightIcon, ArrowTopRightOnSquareIcon } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { SEO } from "../components";
 import { motion } from "framer-motion";
@@ -27,15 +27,17 @@ const Home: NextPage = () => {
           <div className="flex items-center justify-between w-full">
             <h1 className="text-4xl italic font-bold text-brand-600">Zuck</h1>
             <div>
-              <Link href="/auth/login">
-                <a className="px-6 py-2 text-sm font-semibold bg-white hover:bg-gray-100 mr-4">
-                  Login
-                </a>
+              <Link
+                href="/auth/login"
+                className="px-6 py-2 text-sm font-semibold bg-white hover:bg-gray-100 mr-4 inline-block"
+              >
+                Login
               </Link>
-              <Link href="/auth/signup">
-                <a className="px-6 py-2 text-sm font-semibold text-white bg-gray-800 rounded-sm hover:bg-gray-900">
-                  Sign up
-                </a>
+              <Link
+                href="/auth/signup"
+                className="px-6 py-2 text-sm font-semibold text-white bg-gray-800 rounded-sm hover:bg-gray-900 inline-block"
+              >
+                Sign up
               </Link>
             </div>
           </div>
@@ -54,10 +56,11 @@ const Home: NextPage = () => {
             </motion.h2>
           </div>
           <motion.div variants={fadeInUp}>
-            <Link href="/food">
-              <a className="flex px-6 py-4 mr-2 font-semibold text-white rounded-sm w-max text-md bg-brand-600 hover:bg-brand-700">
-                Explore our Menu <ArrowRightIcon className="w-6 h-6 ml-4" />{" "}
-              </a>
+            <Link
+              href="/food"
+              className="flex px-6 py-4 mr-2 font-semibold text-white rounded-sm w-max text-md bg-brand-600 hover:bg-brand-700"
+            >
+              Explore our Menu <ArrowRightIcon className="w-6 h-6 ml-4" />
             </Link>
           </motion.div>
           <div>
@@ -67,10 +70,13 @@ const Home: NextPage = () => {
             </p>
           </div>
           <div>
-            <Link href="https://sush.vercel.app/">
-              <a className="flex font-medium text-gray-600 align-middle" target="_blank">
-                Made by Sushil Buragute <ExternalLinkIcon className="w-6 h-6 ml-2 " />
-              </a>
+            <Link
+              href="https://sush.vercel.app/"
+              target="_blank"
+              rel="noreferrer"
+              className="flex font-medium text-gray-600 align-middle"
+            >
+              Made by Sushil Buragute <ArrowTopRightOnSquareIcon className="w-6 h-6 ml-2 " />
             </Link>
           </div>
         </motion.div>
@@ -78,8 +84,9 @@ const Home: NextPage = () => {
         <div className="relative">
           <Image
             alt="Pizza Dining"
-            layout="fill"
-            objectFit="cover"
+            fill
+            sizes="(max-width: 768px) 100vw, 50vw"
+            className="object-cover"
             quality={100}
             src="https://images.unsplash.com/photo-1594179047519-f347310d3322?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80"
           />

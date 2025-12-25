@@ -1,6 +1,5 @@
 import axios from "axios";
 import { NextPage, NextPageContext } from "next";
-import { useQuery } from "react-query";
 import { Navbar, Layout, Jumbotron, SortBar, Card, SEO, Footer } from "../../components/index";
 import Spinner from "../../components/Spinner/Spinner";
 import { IDish } from "../../types/IDish";

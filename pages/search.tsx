@@ -1,9 +1,9 @@
 import { NextPage } from "next";
 import { Navbar, SEO, Footer, Layout, Card, Jumbotron } from "../components";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import Spinner from "../components/Spinner/Spinner";
-import { SearchIcon } from "@heroicons/react/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { ChangeEvent, useState } from "react";
 import { IDish } from "../types/IDish";
 import Image from "next/image";
@@ -12,11 +12,12 @@ import { motion } from "framer-motion";
 import { fadeInUp } from "../animation/fadeInUp";
 
 const Search: NextPage = () => {
-  const [searchQuery, setSearchQuery] = useState<String>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
   const [searchResult, setSearchResult] = useState<[IDish] | [] | null>(null);
-  const { isLoading, isError, data, error } = useQuery("dishes", () =>
-    axios.get("https://zuck-backend.up.railway.app/api/food")
-  );
+  const { isLoading, isError, data } = useQuery({
+    queryKey: ["dishes"],
+    queryFn: () => axios.get("https://zuck-backend.up.railway.app/api/food"),
+  });
 
   if (isError)
     return (
@@ -60,7 +61,7 @@ const Search: NextPage = () => {
                 className="inline-flex items-center justify-center px-4 py-2 ml-2 text-white bg-white rounded font- bg-opacity-10 focus:ring-brand-500 focus:border-brand-500 hover:bg-opacity-20"
                 type="submit"
               >
-                <SearchIcon className="w-6 h-6 text-white" />
+                <MagnifyingGlassIcon className="w-6 h-6 text-white" />
               </button>
             </div>
           </form>

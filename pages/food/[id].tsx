@@ -8,8 +8,8 @@ import {
   MinusIcon,
   TrashIcon,
   CurrencyRupeeIcon,
-} from "@heroicons/react/outline";
-import { CheckIcon, StarIcon, HeartIcon as HeartIconSolid } from "@heroicons/react/solid";
+} from "@heroicons/react/24/outline";
+import { CheckIcon, StarIcon, HeartIcon as HeartIconSolid } from "@heroicons/react/24/solid";
 import axios from "axios";
 import clsx from "clsx";
 import Image from "next/image";
@@ -267,7 +267,13 @@ const FoodPage: NextPage<IProps> = ({ dish }) => {
                   variants={fadeInUp}
                   className="overflow-hidden rounded-lg aspect-w-1 aspect-h-1"
                 >
-                  <Image src={dish.image} alt={dish.name} layout="fill" objectFit="cover" />
+                  <Image
+                    src={dish.image}
+                    alt={dish.name}
+                    fill
+                    sizes="(max-width: 1024px) 100vw, 50vw"
+                    className="object-cover"
+                  />
                 </motion.div>
               </div>
 
